@@ -452,10 +452,12 @@ button:disabled {
 
 .level-carousel-track .level-card {
   flex: 0 0 clamp(200px, 27vw, 400px);
-  height: auto;
-  /* shorter cards (content height, capped) so the bottom toolbar always shows */
+  /* fill the carousel height (no empty gaps); the bottom toolbar is a
+     reserved flex child so it never gets pushed off-screen. If a card's
+     content is taller than the viewport it scrolls inside the card. */
+  height: 100%;
   max-height: 100%;
-  align-self: center;
+  align-self: stretch;
   scroll-snap-align: start;
   min-height: 0;
   overflow-y: auto;
