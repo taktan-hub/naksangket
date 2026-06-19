@@ -417,7 +417,6 @@ button:disabled {
 .level-select-screen {
   display: flex !important;
   flex-direction: column;
-  justify-content: center;
   gap: clamp(4px, 1vh, 10px);
   overflow: hidden !important;
   height: 100%;
@@ -445,11 +444,10 @@ button:disabled {
 }
 
 .level-carousel-wrap {
-  /* only as tall as the cards so the toolbar sits right below them.
-     Shrinks (flex 0 1) on short screens; never grows to fill the viewport. */
-  flex: 0 1 auto;
+  /* fill the space between heading and toolbar so there is no empty gap
+     above or below; cards stretch and distribute their content evenly. */
+  flex: 1 1 0;
   min-height: 0;
-  max-height: 100%;
   display: flex;
   align-items: stretch;
   gap: clamp(4px, 1vw, 10px);
@@ -475,15 +473,21 @@ button:disabled {
 
 .level-carousel-track .level-card {
   flex: 0 0 clamp(200px, 27vw, 400px);
-  /* proportional cards: height follows content, capped to the carousel so
-     they never push the toolbar off-screen. Centered vertically in the
-     carousel so any spare space reads as balanced padding, not a scroll. */
-  height: auto;
+  /* fill the carousel height and spread content evenly so there is no
+     hollow gap inside the card and no empty space around it */
+  height: 100%;
   max-height: 100%;
-  align-self: center;
+  align-self: stretch;
+  justify-content: space-evenly;
   scroll-snap-align: start;
   min-height: 0;
   overflow: hidden;
+}
+
+/* even distribution overrides the default bottom-pinned spacing */
+.level-carousel-track .level-card .star-row,
+.level-carousel-track .level-card .level-play {
+  margin-top: 0;
 }
 
 /* Prev/Next arrow buttons */
