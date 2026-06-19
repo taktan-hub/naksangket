@@ -31,7 +31,7 @@
 
 html {
   scroll-behavior: smooth;
-  height: 100%;
+  height: var(--app-height, 100%);
   overflow: hidden;
   overscroll-behavior: none;
 }
@@ -440,6 +440,13 @@ button:disabled {
 .level-select-heading {
   margin: 0 !important;
   padding: 0;
+}
+
+/* Keep the level-select toolbar a single compact row: the sponsor blurb is
+   already shown on every card, so hide the duplicate under the button — its
+   extra 2-3 lines were inflating the toolbar height and causing overflow. */
+.level-select-screen .game-toolbar .sponsored-action small {
+  display: none;
 }
 
 .level-select-heading h1 {
