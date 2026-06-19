@@ -32,8 +32,9 @@ const ASSETS_TO_CACHE = [
   "./images/หัวผักกาดขาว.png",
   "./images/แอปเปิล.png",
   "./images/แอปเปิลเขียว.png",
-  "./images/icon-192x192.png",
-  "./images/icon-512x512.png"
+  "./images/app-icon.svg",
+  "./images/ios-share-icon.png",
+  "./images/ios-share-icon-dark.svg"
 ];
 
 // ====== Installation ======

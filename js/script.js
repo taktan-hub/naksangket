@@ -154,6 +154,7 @@ const state = {
 
 let toastTimer = null;
 let audioContext = null;
+let activeDragState = null;
 
 function loadProgress() {
   const fallback = { unlocked: 1, stars: {}, bestScores: {}, soundOn: true };
@@ -264,7 +265,7 @@ function showInstallGuide() {
   dialog.className = "install-guide-dialog";
   dialog.innerHTML = `
     <form method="dialog">
-      <button type="submit" class="dialog-close" aria-label="ปิดคำแนะนำ">✕</button>
+      <button type="submit" class="dialog-close" aria-label="ปิดคำแนะนำ">ปิด</button>
       <div class="install-header">
         <img src="images/ios-share-icon-dark.svg" alt="iOS Share Icon" class="install-icon">
         <h2>วิธีติดตั้งเกมใน iPhone/iPad</h2>
@@ -285,10 +286,10 @@ function showInstallGuide() {
         </li>
         <li>
           <strong>แตะ "Add"</strong>
-          <p>เกมจะปรากฏที่หน้าจอ! 🎮</p>
+          <p>เกมจะปรากฏที่หน้าจอหลัก</p>
         </li>
       </ol>
-      <p class="install-tip">💡 หลังจากติดตั้ง เกมจะทำงานได้แม้ไม่มีอินเทอร์เน็ต</p>
+      <p class="install-tip">หลังจากติดตั้ง เกมจะทำงานได้แม้ไม่มีอินเทอร์เน็ต</p>
       <button type="submit" class="primary-button">ตกลง</button>
     </form>
   `;
@@ -303,7 +304,7 @@ function initInstallPrompt() {
 
   if (isIOS && !installed && !hasSeenPrompt) {
     setTimeout(() => {
-      showToast("💡 ติดตั้งเกมสบายๆ: แตะ Share → Add to Home Screen", 8000);
+      showToast("ติดตั้งเกมได้ง่าย ๆ: แตะ Share แล้วเลือก Add to Home Screen", "hint");
       localStorage.setItem("install-prompt-shown", "true");
     }, 1500);
   }
@@ -811,9 +812,30 @@ function renderDropZone(group, criterion, items) {
 }
 
 function setupDragAndDrop() {
+  cleanupDragGhostBlocks();
   app.querySelectorAll(".item-card[data-item-id]").forEach((card) => {
     card.addEventListener("pointerdown", beginPointerDrag);
     card.addEventListener("keydown", handleCardKeyboard);
+  });
+}
+
+function cleanupDragGhostBlocks(exceptNode = null) {
+  if (activeDragState) {
+    const { card, origin, placeholder } = activeDragState;
+    card.classList.remove("dragging");
+    card.removeAttribute("style");
+    if (placeholder?.isConnected) {
+      placeholder.replaceWith(card);
+    } else if (origin?.isConnected && card.parentElement !== origin) {
+      origin.appendChild(card);
+    }
+    activeDragState = null;
+  }
+  document.querySelectorAll('[data-placeholder="true"], .drag-placeholder').forEach((node) => {
+    if (node !== exceptNode) node.remove();
+  });
+  document.querySelectorAll(".drop-zone.drag-over").forEach((zone) => {
+    zone.classList.remove("drag-over");
   });
 }
 
@@ -828,14 +850,17 @@ function handleCardKeyboard(event) {
 
 function beginPointerDrag(event) {
   if (event.button !== undefined && event.button !== 0) return;
+  cleanupDragGhostBlocks();
   const card = event.currentTarget;
   const origin = card.parentElement;
   const placeholder = document.createElement("div");
   const rect = card.getBoundingClientRect();
+  placeholder.className = "drag-placeholder";
   placeholder.style.width = `${rect.width}px`;
   placeholder.style.height = `${rect.height}px`;
   placeholder.dataset.placeholder = "true";
   origin.insertBefore(placeholder, card);
+  activeDragState = { card, origin, placeholder };
 
   card.classList.add("dragging");
   card.style.position = "fixed";
@@ -871,11 +896,17 @@ function beginPointerDrag(event) {
 
     card.classList.remove("dragging");
     card.removeAttribute("style");
-    placeholder.replaceWith(card);
+    if (placeholder.isConnected) {
+      placeholder.replaceWith(card);
+    } else if (origin.isConnected && card.parentElement !== origin) {
+      origin.appendChild(card);
+    }
+    activeDragState = null;
 
     if (currentZone) {
       handleDrop(card.dataset.itemId, currentZone.dataset.group, card);
     }
+    cleanupDragGhostBlocks();
     card.releasePointerCapture?.(endEvent.pointerId);
   };
 
@@ -1142,7 +1173,9 @@ function renderLevelSummary(stars, reasonExample) {
   if (isFinal) {
     app.querySelector("#finalReviewButton").addEventListener("click", renderFinalReview);
   } else {
-    app.querySelector("#nextLevelButton").addEventListener("click", () => startLevel(state.level.id + 1));
+    app.querySelector("#nextLevelButton").addEventListener("click", () => {
+      openSponsoredGame("level", `level=${state.level.id + 1}`);
+    });
   }
   app.querySelector("#replayButton").addEventListener("click", () => startLevel(state.level.id));
   app.querySelector("#summaryLevelsButton").addEventListener("click", renderLevelSelect);
@@ -1245,6 +1278,10 @@ soundButton.addEventListener("click", () => {
   if (state.soundOn) playTone("correct");
 });
 teacherButton.addEventListener("click", () => teacherDialog.showModal());
+window.addEventListener("blur", () => cleanupDragGhostBlocks());
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "hidden") cleanupDragGhostBlocks();
+});
 
 updateSoundButton();
 initViewportHeight();

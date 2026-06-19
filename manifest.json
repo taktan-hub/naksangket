@@ -10,16 +10,16 @@
   "theme_color": "#78c9ee",
   "icons": [
     {
-      "src": "./images/icon-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png",
+      "src": "./images/app-icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
       "purpose": "any maskable"
     },
     {
-      "src": "./images/icon-512x512.png",
+      "src": "./images/ios-share-icon.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     }
   ],
   "categories": ["education", "games"],
@@ -45,8 +45,9 @@
       "url": "./index.html#level=1",
       "icons": [
         {
-          "src": "./images/icon-192x192.png",
-          "sizes": "192x192"
+          "src": "./images/app-icon.svg",
+          "sizes": "512x512",
+          "type": "image/svg+xml"
         }
       ]
     },
@@ -57,8 +58,9 @@
       "url": "./index.html#level=5",
       "icons": [
         {
-          "src": "./images/icon-192x192.png",
-          "sizes": "192x192"
+          "src": "./images/app-icon.svg",
+          "sizes": "512x512",
+          "type": "image/svg+xml"
         }
       ]
     }
