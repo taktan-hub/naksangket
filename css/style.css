@@ -983,6 +983,90 @@ body[data-screen="summary"] .summary-card {
   grid-template-rows: repeat(2, minmax(0, 1fr));
 }
 
+.criterion-count .instruction-banner {
+  margin-bottom: clamp(6px, 1vh, 10px);
+}
+
+.criterion-count .game-layout {
+  grid-template-columns: 1fr;
+  grid-template-rows: minmax(170px, 0.72fr) minmax(230px, 1fr);
+  gap: clamp(10px, 1.5vh, 16px);
+  height: calc(100% - clamp(150px, 22vh, 210px));
+  align-items: stretch;
+}
+
+.criterion-count .card-bank,
+.criterion-count .drop-area {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.criterion-count .card-bank h2,
+.criterion-count .drop-area h2 {
+  flex: 0 0 auto;
+  margin-bottom: clamp(5px, 0.9vh, 10px);
+}
+
+.criterion-count .cards-grid {
+  display: flex;
+  flex: 1 1 auto;
+  gap: clamp(10px, 1.4vw, 16px);
+  min-height: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.criterion-count .cards-grid::-webkit-scrollbar {
+  display: none;
+}
+
+.criterion-count #cardBank .item-card {
+  flex: 0 0 clamp(110px, 16vw, 170px);
+  width: clamp(110px, 16vw, 170px);
+  height: 100%;
+  min-height: 0;
+  scroll-snap-align: start;
+}
+
+.criterion-count #cardBank .item-card img {
+  flex: 1 1 auto;
+  height: 100%;
+  min-height: 0;
+  max-height: calc(100% - 34px);
+}
+
+.criterion-count .zones-grid[data-group-count="4"] {
+  display: flex;
+  flex: 1 1 auto;
+  gap: clamp(10px, 1.5vw, 16px);
+  min-height: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.criterion-count .zones-grid[data-group-count="4"]::-webkit-scrollbar {
+  display: none;
+}
+
+.criterion-count .drop-zone {
+  flex: 0 0 min(74vw, 360px);
+  width: min(74vw, 360px);
+  min-height: 0;
+  scroll-snap-align: start;
+}
+
+.criterion-count .drop-zone h3 {
+  font-size: clamp(1.25rem, 3vw, 2rem);
+}
+
 .zones-grid[data-group-count="7"] {
   grid-template-columns: repeat(4, minmax(0, 1fr));
   grid-template-rows: repeat(2, minmax(0, 1fr));
@@ -1689,6 +1773,43 @@ body[data-screen="summary"] .summary-card {
   .card-bank {
     min-height: 0;
   }
+
+  .criterion-count.classification-screen {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(6px, 1vh, 10px);
+    overflow: hidden !important;
+  }
+
+  .criterion-count .game-header,
+  .criterion-count .instruction-banner,
+  .criterion-count .game-toolbar {
+    flex: 0 0 auto;
+  }
+
+  .criterion-count .game-layout {
+    flex: 1 1 0;
+    height: auto;
+    grid-template-rows: minmax(130px, 0.62fr) minmax(190px, 1fr);
+    gap: clamp(7px, 1.2vh, 11px);
+    overflow: hidden;
+  }
+
+  .criterion-count .card-bank,
+  .criterion-count .drop-area {
+    padding: clamp(8px, 1.5vh, 13px);
+  }
+
+  .criterion-count #cardBank .item-card {
+    flex-basis: clamp(92px, 25vw, 145px);
+    width: clamp(92px, 25vw, 145px);
+    padding: 5px;
+  }
+
+  .criterion-count .drop-zone {
+    flex-basis: min(76vw, 330px);
+    width: min(76vw, 330px);
+  }
 }
 
 @media (max-width: 680px) {
@@ -1942,6 +2063,28 @@ body[data-screen="summary"] .summary-card {
 
   .level-card .sponsor-note {
     display: none;
+  }
+
+  .criterion-count .instruction-banner {
+    padding: 7px 10px;
+    font-size: 0.88rem;
+  }
+
+  .criterion-count .card-bank h2,
+  .criterion-count .drop-area h2 {
+    margin-bottom: 4px;
+    font-size: 0.92rem;
+  }
+
+  .criterion-count .game-toolbar {
+    gap: 6px;
+    margin-top: 5px;
+  }
+
+  .criterion-count .game-toolbar button {
+    min-height: 34px;
+    padding: 5px 9px;
+    font-size: 0.82rem;
   }
 }
 
@@ -2296,6 +2439,44 @@ body[data-screen="summary"] .summary-card {
 
   .level-select-screen {
     gap: 3px;
+  }
+
+  .criterion-count .game-header {
+    padding: 6px 10px;
+  }
+
+  .criterion-count .criterion-badge {
+    min-height: 28px;
+    padding: 3px 8px;
+    font-size: 0.78rem;
+  }
+
+  .criterion-count .game-header h1 {
+    font-size: clamp(0.95rem, 2vw, 1.2rem);
+  }
+
+  .criterion-count .game-layout {
+    grid-template-rows: minmax(100px, 0.55fr) minmax(160px, 1fr);
+  }
+
+  .criterion-count .card-bank,
+  .criterion-count .drop-area {
+    padding: 7px;
+    border-radius: 16px;
+  }
+
+  .criterion-count #cardBank .item-card {
+    flex-basis: clamp(78px, 18vw, 116px);
+    width: clamp(78px, 18vw, 116px);
+  }
+
+  .criterion-count .drop-zone {
+    flex-basis: min(62vw, 260px);
+    width: min(62vw, 260px);
+  }
+
+  .criterion-count .drop-zone h3 {
+    font-size: clamp(0.95rem, 2.4vw, 1.25rem);
   }
 }
 
