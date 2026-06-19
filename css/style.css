@@ -410,6 +410,7 @@ button:disabled {
 .level-select-screen {
   display: flex !important;
   flex-direction: column;
+  justify-content: center;
   gap: clamp(4px, 1vh, 10px);
   overflow: hidden !important;
   height: 100%;
@@ -425,7 +426,10 @@ button:disabled {
 }
 
 .level-carousel-wrap {
-  flex: 1 1 0;
+  flex: 0 1 auto;
+  /* cap the carousel height so heading + dots + bottom toolbar always fit */
+  height: 100%;
+  max-height: min(48dvh, 360px);
   display: flex;
   align-items: stretch;
   gap: clamp(4px, 1vw, 10px);
