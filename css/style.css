@@ -987,11 +987,35 @@ body[data-screen="summary"] .summary-card {
   margin-bottom: clamp(6px, 1vh, 10px);
 }
 
+/* Classification screen fills the viewport as a flex column at ALL widths
+   (incl. iPad ≥980px). game-layout flexes to whatever space is left after
+   the header — so Boss's taller header (timer + round map) no longer cuts
+   the group boxes to half. Replaces the brittle height:calc(...) magic. */
+.classification-screen {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(6px, 1vh, 12px);
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.classification-screen > .game-header,
+.classification-screen > .instruction-banner,
+.classification-screen > .game-toolbar {
+  flex: 0 0 auto;
+}
+
+.classification-screen > .game-layout {
+  flex: 1 1 0;
+  min-height: 0;
+  align-items: stretch;
+}
+
 .swipe-classification .game-layout {
   grid-template-columns: 1fr;
-  grid-template-rows: minmax(170px, 0.72fr) minmax(230px, 1fr);
+  grid-template-rows: minmax(150px, 0.72fr) minmax(200px, 1fr);
   gap: clamp(10px, 1.5vh, 16px);
-  height: calc(100% - clamp(150px, 22vh, 210px));
   align-items: stretch;
 }
 
