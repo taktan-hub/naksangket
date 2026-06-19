@@ -42,10 +42,11 @@ html {
 body {
   position: fixed;
   inset: 0;
+  /* inset:0 (top+bottom=0) sizes body to the REAL visible viewport.
+     Do NOT also set height — an explicit height wins over bottom:0 and
+     can exceed the visible area, pushing the toolbar off-screen. */
   margin: 0;
   width: 100%;
-  height: 100dvh;
-  height: 100svh;
   overflow: hidden;
   overscroll-behavior: none;
   display: flex;
@@ -2256,9 +2257,14 @@ button:disabled {
 /* Landscape orientation */
 /* Mobile landscape (locked orientation): keep no-scroll, fit viewport */
 @media (max-height: 600px) and (orientation: landscape) {
-  html,
+  html {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  /* body is position:fixed + inset:0 (sized to the real viewport); never
+     set an explicit height here or it overrides bottom:0 and clips content */
   body {
-    height: 100dvh;
     overflow: hidden;
   }
 
