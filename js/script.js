@@ -158,7 +158,10 @@ let activeDragState = null;
 let levelTouchStart = null;
 
 function isScrollLockedScreen() {
-  return ["levels", "game"].includes(state.screen) && ["levels", "observe"].includes(document.body.dataset.screen);
+  return (
+    ["levels", "game", "summary"].includes(state.screen) &&
+    ["levels", "observe", "summary"].includes(document.body.dataset.screen)
+  );
 }
 
 function isInsideDialog(target) {
