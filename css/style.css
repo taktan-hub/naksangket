@@ -444,13 +444,12 @@ button:disabled {
 }
 
 .level-carousel-wrap {
-  /* RULE: never stretch the carousel. Its height = the cards' natural
-     height, so the toolbar sits directly below the cards (no scroll). */
-  flex: 0 0 auto;
+  /* Fill the space between heading and toolbar; cards grow to fill it as
+     bigger touch targets (content spread evenly, not a hollow stretch). */
+  flex: 1 1 0;
   min-height: 0;
-  max-height: 100%;
   display: flex;
-  align-items: start;
+  align-items: stretch;
   gap: clamp(4px, 1vw, 10px);
   overflow: hidden;
 }
@@ -474,14 +473,37 @@ button:disabled {
 
 .level-carousel-track .level-card {
   flex: 0 0 clamp(200px, 27vw, 400px);
-  /* RULE: card height follows its content (no stretch). max-height keeps
-     it inside the viewport so it can never push the toolbar off-screen. */
-  height: auto;
+  /* Card fills the carousel height as a big touch target; content spread
+     evenly so it reads as a generous card, not a hollow stretched one. */
+  height: 100%;
   max-height: 100%;
-  align-self: start;
+  align-self: stretch;
+  justify-content: space-evenly;
+  gap: clamp(6px, 1.4vh, 16px);
   scroll-snap-align: start;
   min-height: 0;
   overflow: hidden;
+}
+
+/* Fill, not hollow: stop the description from grabbing all the slack and
+   release the bottom-pinned spacing so everything distributes evenly. */
+.level-carousel-track .level-card p {
+  flex: 0 0 auto;
+}
+
+.level-carousel-track .level-card .star-row,
+.level-carousel-track .level-card .level-play {
+  margin-top: 0;
+}
+
+/* Bigger, friendlier controls inside the enlarged cards */
+.level-carousel-track .level-card .star {
+  font-size: clamp(1.6rem, 4vh, 2.6rem);
+}
+
+.level-carousel-track .level-card .level-play {
+  min-height: clamp(44px, 7vh, 64px);
+  font-size: clamp(1rem, 2.4vh, 1.4rem);
 }
 
 /* Prev/Next arrow buttons */
