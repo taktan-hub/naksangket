@@ -402,16 +402,28 @@ button:disabled {
   margin-top: 0;
 }
 
-/* Level select: horizontal swipe carousel — no scroll on any screen size */
+/* Level select: horizontal swipe carousel — no scroll on any screen size
+   topbar=72px, #app padding=clamp(18px,3vw,42px)×2 = clamp(36px,6vw,84px)
+   height = 100dvh - topbar - padding */
 .level-select-screen {
   display: flex !important;
   flex-direction: column;
   gap: clamp(4px, 1vh, 10px);
   overflow: hidden !important;
+  height: calc(100dvh - 72px - clamp(36px, 6vw, 84px));
+  max-height: calc(100dvh - 72px - clamp(36px, 6vw, 84px));
+  box-sizing: border-box;
+}
+
+/* Fixed-height children must not grow */
+.level-select-screen > .section-heading,
+.level-select-screen > .carousel-dots,
+.level-select-screen > .game-toolbar {
+  flex: 0 0 auto;
 }
 
 .level-carousel-wrap {
-  flex: 1;
+  flex: 1 1 0;
   display: flex;
   align-items: stretch;
   gap: clamp(4px, 1vw, 10px);
@@ -1655,6 +1667,12 @@ button:disabled {
   }
 
   /* Level select: compact toolbar + no sponsor notes on small screens */
+  /* max-width:680px → topbar=112px, #app padding=14px×2=28px */
+  .level-select-screen {
+    height: calc(100dvh - 140px);
+    max-height: calc(100dvh - 140px);
+  }
+
   .level-select-screen .section-heading {
     margin-bottom: 2px;
     padding: 2px 0;
@@ -2019,8 +2037,11 @@ button:disabled {
     height: 8px;
   }
 
+  /* max-height:620px → topbar=58px, #app padding=10px×2=20px */
   .level-select-screen {
     gap: 3px;
+    height: calc(100dvh - 78px);
+    max-height: calc(100dvh - 78px);
   }
 }
 
@@ -2034,6 +2055,12 @@ button:disabled {
   #app {
     height: calc(100vh - 96px);
     height: calc(100dvh - 96px);
+  }
+
+  /* max-width:680px + max-height:620px → topbar=96px, #app padding=10px×2=20px */
+  .level-select-screen {
+    height: calc(100dvh - 116px);
+    max-height: calc(100dvh - 116px);
   }
 
   .hero {
