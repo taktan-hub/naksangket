@@ -1067,6 +1067,11 @@ body[data-screen="summary"] .summary-card {
   font-size: clamp(1.25rem, 3vw, 2rem);
 }
 
+.criterion-shape .drop-zone {
+  flex-basis: min(86vw, 560px);
+  width: min(86vw, 560px);
+}
+
 .zones-grid[data-group-count="7"] {
   grid-template-columns: repeat(4, minmax(0, 1fr));
   grid-template-rows: repeat(2, minmax(0, 1fr));
@@ -1810,6 +1815,11 @@ body[data-screen="summary"] .summary-card {
     flex-basis: min(76vw, 330px);
     width: min(76vw, 330px);
   }
+
+  .criterion-shape .drop-zone {
+    flex-basis: min(88vw, 520px);
+    width: min(88vw, 520px);
+  }
 }
 
 @media (max-width: 680px) {
@@ -2473,6 +2483,11 @@ body[data-screen="summary"] .summary-card {
   .swipe-classification .drop-zone {
     flex-basis: min(62vw, 260px);
     width: min(62vw, 260px);
+  }
+
+  .criterion-shape .drop-zone {
+    flex-basis: min(82vw, 420px);
+    width: min(82vw, 420px);
   }
 
   .swipe-classification .drop-zone h3 {
