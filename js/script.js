@@ -319,10 +319,17 @@ function setAppHeight() {
 
 function initViewportHeight() {
   setAppHeight();
+  // วัดซ้ำหลัง layout/address bar นิ่ง (ค่าตอน initial มักใหญ่เกินจริงเล็กน้อย)
+  window.addEventListener("load", setAppHeight);
+  window.addEventListener("pageshow", setAppHeight);
+  setTimeout(setAppHeight, 300);
+  setTimeout(setAppHeight, 800);
+
   window.addEventListener("resize", setAppHeight);
   window.addEventListener("orientationchange", () => {
-    // หน่วงเล็กน้อยให้เบราว์เซอร์รายงานขนาดหลังหมุนจอเสร็จก่อน
+    // หน่วงให้เบราว์เซอร์รายงานขนาดหลังหมุนจอเสร็จก่อน
     setTimeout(setAppHeight, 250);
+    setTimeout(setAppHeight, 600);
   });
   if (window.visualViewport) {
     window.visualViewport.addEventListener("resize", setAppHeight);

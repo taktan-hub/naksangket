@@ -185,7 +185,9 @@ button:disabled {
   flex: 1;
   min-height: 0;
   margin: 0 auto;
-  padding: clamp(18px, 3vw, 42px);
+  /* tighter top/bottom so content fits the viewport with no spare space
+     below the toolbar; keep generous side padding for the cards */
+  padding: clamp(8px, 1.2vh, 16px) clamp(18px, 3vw, 42px);
   overflow: hidden;
 }
 
