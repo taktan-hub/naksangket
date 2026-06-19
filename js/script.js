@@ -177,13 +177,14 @@ function setScreenClass(screenName) {
 
 function initLevelSelectScrollLock() {
   document.addEventListener("touchstart", (event) => {
-    if (state.screen !== "levels" || event.touches.length !== 1) return;
+    if (!["levels", "observe"].includes(state.screen) || event.touches.length !== 1) return;
     const touch = event.touches[0];
     levelTouchStart = { x: touch.clientX, y: touch.clientY };
   }, { passive: true });
 
   document.addEventListener("touchmove", (event) => {
-    if (state.screen !== "levels" || !levelTouchStart || event.touches.length !== 1) return;
+    if (!["levels", "observe"].includes(state.screen) || !levelTouchStart || event.touches.length !== 1) return;
+    if (event.target.closest("dialog")) return;
     const touch = event.touches[0];
     const dx = Math.abs(touch.clientX - levelTouchStart.x);
     const dy = Math.abs(touch.clientY - levelTouchStart.y);
@@ -195,7 +196,8 @@ function initLevelSelectScrollLock() {
   }, { passive: true });
 
   window.addEventListener("wheel", (event) => {
-    if (state.screen !== "levels") return;
+    if (!["levels", "observe"].includes(state.screen)) return;
+    if (event.target.closest("dialog")) return;
     if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) event.preventDefault();
   }, { passive: false });
 }
@@ -682,9 +684,11 @@ function renderRoundMap() {
 }
 
 function renderObservationLevel() {
+  state.screen = "observe";
+  setScreenClass("observe");
   const items = state.level.itemIds.map((id) => ITEM_MAP.get(id));
   app.innerHTML = `
-    <section class="screen">
+    <section class="screen observation-screen">
       ${renderGameHeader("แตะบัตรภาพทุกใบ แล้วอ่านสิ่งที่สังเกตได้", state.level.required, state.observedIds.size)}
       <div class="instruction-banner"><strong>กิจกรรม:</strong> แตะบัตรภาพทุกใบ เพื่อสังเกตจำนวน สี รูปร่าง และประเภท</div>
       <section class="observation-area">
