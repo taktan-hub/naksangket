@@ -410,7 +410,6 @@ button:disabled {
 .level-select-screen {
   display: flex !important;
   flex-direction: column;
-  justify-content: center;
   gap: clamp(4px, 1vh, 10px);
   overflow: hidden !important;
   height: 100%;
@@ -438,14 +437,13 @@ button:disabled {
 }
 
 .level-carousel-wrap {
-  flex: 0 1 auto;
-  /* cap the carousel height so heading + dots + bottom toolbar always fit */
-  height: 100%;
-  max-height: min(44dvh, 330px);
+  /* fill all space between the heading and the bottom toolbar so there
+     are no empty gaps and nothing overflows (no scrollbar) */
+  flex: 1 1 0;
+  min-height: 0;
   display: flex;
   align-items: stretch;
   gap: clamp(4px, 1vw, 10px);
-  min-height: 0;
   overflow: hidden;
 }
 
@@ -469,19 +467,13 @@ button:disabled {
 .level-carousel-track .level-card {
   flex: 0 0 clamp(200px, 27vw, 400px);
   /* fill the carousel height (no empty gaps); the bottom toolbar is a
-     reserved flex child so it never gets pushed off-screen. If a card's
-     content is taller than the viewport it scrolls inside the card. */
+     reserved flex child so it never gets pushed off-screen. */
   height: 100%;
   max-height: 100%;
   align-self: stretch;
   scroll-snap-align: start;
   min-height: 0;
-  overflow-y: auto;
-  scrollbar-width: none;
-}
-
-.level-carousel-track .level-card::-webkit-scrollbar {
-  display: none;
+  overflow: hidden;
 }
 
 /* Prev/Next arrow buttons */
