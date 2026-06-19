@@ -444,12 +444,13 @@ button:disabled {
 }
 
 .level-carousel-wrap {
-  /* fill the space between heading and toolbar so there is no empty gap
-     above or below; cards stretch and distribute their content evenly. */
-  flex: 1 1 0;
+  /* RULE: never stretch the carousel. Its height = the cards' natural
+     height, so the toolbar sits directly below the cards (no scroll). */
+  flex: 0 0 auto;
   min-height: 0;
+  max-height: 100%;
   display: flex;
-  align-items: stretch;
+  align-items: start;
   gap: clamp(4px, 1vw, 10px);
   overflow: hidden;
 }
@@ -473,21 +474,14 @@ button:disabled {
 
 .level-carousel-track .level-card {
   flex: 0 0 clamp(200px, 27vw, 400px);
-  /* fill the carousel height and spread content evenly so there is no
-     hollow gap inside the card and no empty space around it */
-  height: 100%;
+  /* RULE: card height follows its content (no stretch). max-height keeps
+     it inside the viewport so it can never push the toolbar off-screen. */
+  height: auto;
   max-height: 100%;
-  align-self: stretch;
-  justify-content: space-evenly;
+  align-self: start;
   scroll-snap-align: start;
   min-height: 0;
   overflow: hidden;
-}
-
-/* even distribution overrides the default bottom-pinned spacing */
-.level-carousel-track .level-card .star-row,
-.level-carousel-track .level-card .level-play {
-  margin-top: 0;
 }
 
 /* Prev/Next arrow buttons */
