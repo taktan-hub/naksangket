@@ -2218,54 +2218,59 @@ button:disabled {
 }
 
 /* Landscape orientation */
+/* Mobile landscape (locked orientation): keep no-scroll, fit viewport */
 @media (max-height: 600px) and (orientation: landscape) {
-  html {
-    height: 100%;
-  }
-
+  html,
   body {
-    height: 100vh;
     height: 100dvh;
-    overflow: auto;
+    overflow: hidden;
   }
 
   .topbar {
-    padding: 0.5rem 1rem;
+    padding: 0.4rem 1rem;
     height: auto;
+    min-height: 0;
   }
 
+  /* Home hero stays a 2-column row that fits the short viewport */
   .hero {
-    padding: 1rem;
-    min-height: auto;
-    flex-direction: row;
-    gap: 1.5rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(180px, 0.9fr);
+    grid-template-rows: 1fr;
+    align-items: center;
+    padding: 0.5rem;
+    gap: 1rem;
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
   }
 
   .hero-copy {
-    flex: 1;
+    max-height: 100%;
+    overflow: auto;
+    padding: 0.9rem 1rem;
   }
 
-  .hero-copy h1 {
-    font-size: 1.5rem;
-    margin: 0.5rem 0;
+  .hero-copy h1,
+  .hero h1 {
+    font-size: 1.4rem;
+    margin: 0.4rem 0;
   }
 
-  .hero-copy p {
-    font-size: 0.9rem;
-    margin: 0.5rem 0;
+  .hero-copy p,
+  .hero p {
+    font-size: 0.88rem;
+    margin: 0.4rem 0;
   }
 
   .hero-image-grid {
-    flex: 0 0 auto;
-    width: 200px;
-    height: 150px;
+    width: min(100%, 360px);
+    height: 100%;
+    margin: 0;
   }
 
-  .level-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-    padding: 1rem;
+  .hero-image-grid img {
+    max-height: min(40vh, 130px);
   }
 
   .level-card {
@@ -2283,22 +2288,22 @@ button:disabled {
   }
 
   .screen {
-    padding: 0.75rem;
+    padding: 0.5rem;
   }
 
   .section-heading {
-    padding: 0.5rem 0;
-    margin-bottom: 0.5rem;
+    padding: 0.3rem 0;
+    margin-bottom: 0.3rem;
   }
 
   .section-heading h1 {
-    font-size: 1.3rem;
-    margin: 0.25rem 0;
+    font-size: 1.2rem;
+    margin: 0.2rem 0;
   }
 
   .section-heading p {
-    font-size: 0.85rem;
-    margin: 0.25rem 0;
+    font-size: 0.82rem;
+    margin: 0.2rem 0;
   }
 }
 
