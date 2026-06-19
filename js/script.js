@@ -155,6 +155,7 @@ const state = {
 let toastTimer = null;
 let audioContext = null;
 let activeDragState = null;
+let levelTouchStart = null;
 
 function loadProgress() {
   const fallback = { unlocked: 1, stars: {}, bestScores: {}, soundOn: true };
@@ -172,6 +173,31 @@ function saveProgress() {
 
 function setScreenClass(screenName) {
   document.body.dataset.screen = screenName;
+}
+
+function initLevelSelectScrollLock() {
+  document.addEventListener("touchstart", (event) => {
+    if (state.screen !== "levels" || event.touches.length !== 1) return;
+    const touch = event.touches[0];
+    levelTouchStart = { x: touch.clientX, y: touch.clientY };
+  }, { passive: true });
+
+  document.addEventListener("touchmove", (event) => {
+    if (state.screen !== "levels" || !levelTouchStart || event.touches.length !== 1) return;
+    const touch = event.touches[0];
+    const dx = Math.abs(touch.clientX - levelTouchStart.x);
+    const dy = Math.abs(touch.clientY - levelTouchStart.y);
+    if (dy > dx) event.preventDefault();
+  }, { passive: false });
+
+  document.addEventListener("touchend", () => {
+    levelTouchStart = null;
+  }, { passive: true });
+
+  window.addEventListener("wheel", (event) => {
+    if (state.screen !== "levels") return;
+    if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) event.preventDefault();
+  }, { passive: false });
 }
 
 function openSponsoredGame(sponsorKey, route) {
@@ -1295,6 +1321,7 @@ document.addEventListener("visibilitychange", () => {
 
 updateSoundButton();
 initViewportHeight();
+initLevelSelectScrollLock();
 lockLandscapeOrientation();
 initInstallPrompt();
 handleLaunchRoute();

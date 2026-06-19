@@ -216,6 +216,7 @@ body[data-screen="levels"] .level-select-screen {
   height: 100%;
   max-height: 100%;
   padding: 0;
+  overscroll-behavior: none;
   overflow: hidden !important;
 }
 
@@ -223,6 +224,12 @@ body[data-screen="levels"] .level-carousel-track {
   overflow-x: auto;
   overflow-y: hidden !important;
   touch-action: pan-x;
+}
+
+body[data-screen="levels"] .level-select-screen,
+body[data-screen="levels"] .level-carousel-wrap,
+body[data-screen="levels"] .level-carousel-track {
+  overscroll-behavior-y: none;
 }
 
 @keyframes screen-in {
@@ -2366,6 +2373,10 @@ body[data-screen="levels"] .level-carousel-track {
 
   .screen {
     padding: 0.5rem;
+  }
+
+  body[data-screen="levels"] .screen {
+    padding: 0;
   }
 
   .section-heading {
