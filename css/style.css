@@ -1159,6 +1159,8 @@ body[data-screen="summary"] .summary-card {
   overscroll-behavior-x: contain;
   scroll-snap-type: x proximity;
   scrollbar-width: none;
+  /* allow horizontal swipe of the placed cards inside the zone */
+  touch-action: pan-x;
 }
 
 .swipe-classification .zone-items::-webkit-scrollbar {
@@ -1171,6 +1173,10 @@ body[data-screen="summary"] .summary-card {
   height: 100%;
   padding: 5px;
   scroll-snap-align: start;
+  /* placed cards are no longer draggable (drag listener removed on drop),
+     so let touch pan the zone horizontally instead of being blocked by the
+     base .item-card touch-action:none */
+  touch-action: pan-x;
 }
 
 .swipe-classification .drop-zone .item-card img {
