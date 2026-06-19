@@ -410,6 +410,7 @@ button:disabled {
 .level-select-screen {
   display: flex !important;
   flex-direction: column;
+  justify-content: center;
   gap: clamp(4px, 1vh, 10px);
   overflow: hidden !important;
   height: 100%;
@@ -437,10 +438,11 @@ button:disabled {
 }
 
 .level-carousel-wrap {
-  /* fill all space between the heading and the bottom toolbar so there
-     are no empty gaps and nothing overflows (no scrollbar) */
-  flex: 1 1 0;
+  /* only as tall as the cards so the toolbar sits right below them.
+     Shrinks (flex 0 1) on short screens; never grows to fill the viewport. */
+  flex: 0 1 auto;
   min-height: 0;
+  max-height: 100%;
   display: flex;
   align-items: stretch;
   gap: clamp(4px, 1vw, 10px);
