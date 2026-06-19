@@ -374,10 +374,8 @@ function renderLevelSelect() {
 
   app.innerHTML = `
     <section class="screen level-select-screen">
-      <div class="section-heading">
-        <span class="eyebrow">เลือกภารกิจ</span>
+      <div class="section-heading level-select-heading">
         <h1>เส้นทางนักสังเกต</h1>
-        <p>ผ่านแต่ละด่านเพื่อปลดล็อกภารกิจถัดไป</p>
       </div>
       <div class="level-carousel-wrap">
         <button class="carousel-arrow" id="carouselPrev" type="button" aria-label="ด่านก่อนหน้า">&#8249;</button>

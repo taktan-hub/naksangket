@@ -425,11 +425,23 @@ button:disabled {
   flex: 0 0 auto;
 }
 
+/* Compact single-line heading so the bottom toolbar always fits */
+.level-select-heading {
+  margin: 0 !important;
+  padding: 0;
+}
+
+.level-select-heading h1 {
+  margin: 0;
+  font-size: clamp(1.3rem, 3.2vw, 2rem);
+  line-height: 1.15;
+}
+
 .level-carousel-wrap {
   flex: 0 1 auto;
   /* cap the carousel height so heading + dots + bottom toolbar always fit */
   height: 100%;
-  max-height: min(48dvh, 360px);
+  max-height: min(44dvh, 330px);
   display: flex;
   align-items: stretch;
   gap: clamp(4px, 1vw, 10px);
