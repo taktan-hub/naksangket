@@ -157,6 +157,14 @@ let audioContext = null;
 let activeDragState = null;
 let levelTouchStart = null;
 
+function isScrollLockedScreen() {
+  return ["levels", "game"].includes(state.screen) && ["levels", "observe"].includes(document.body.dataset.screen);
+}
+
+function isInsideDialog(target) {
+  return target instanceof Element && target.closest("dialog");
+}
+
 function loadProgress() {
   const fallback = { unlocked: 1, stars: {}, bestScores: {}, soundOn: true };
   try {
@@ -177,14 +185,14 @@ function setScreenClass(screenName) {
 
 function initLevelSelectScrollLock() {
   document.addEventListener("touchstart", (event) => {
-    if (!["levels", "observe"].includes(state.screen) || event.touches.length !== 1) return;
+    if (!isScrollLockedScreen() || event.touches.length !== 1) return;
     const touch = event.touches[0];
     levelTouchStart = { x: touch.clientX, y: touch.clientY };
   }, { passive: true });
 
   document.addEventListener("touchmove", (event) => {
-    if (!["levels", "observe"].includes(state.screen) || !levelTouchStart || event.touches.length !== 1) return;
-    if (event.target.closest("dialog")) return;
+    if (!isScrollLockedScreen() || !levelTouchStart || event.touches.length !== 1) return;
+    if (isInsideDialog(event.target)) return;
     const touch = event.touches[0];
     const dx = Math.abs(touch.clientX - levelTouchStart.x);
     const dy = Math.abs(touch.clientY - levelTouchStart.y);
@@ -196,8 +204,8 @@ function initLevelSelectScrollLock() {
   }, { passive: true });
 
   window.addEventListener("wheel", (event) => {
-    if (!["levels", "observe"].includes(state.screen)) return;
-    if (event.target.closest("dialog")) return;
+    if (!isScrollLockedScreen()) return;
+    if (isInsideDialog(event.target)) return;
     if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) event.preventDefault();
   }, { passive: false });
 }
@@ -684,7 +692,6 @@ function renderRoundMap() {
 }
 
 function renderObservationLevel() {
-  state.screen = "observe";
   setScreenClass("observe");
   const items = state.level.itemIds.map((id) => ITEM_MAP.get(id));
   app.innerHTML = `
