@@ -798,12 +798,13 @@ function renderClassificationLevel() {
   const groups = round.groups;
   const items = state.level.itemIds.map((id) => ITEM_MAP.get(id));
   const instruction = `ลากบัตรไปวางตามเกณฑ์ “${CRITERION_LABELS[criterion]}”`;
-  const screenClass = `classification-screen criterion-${criterion}`;
+  const usesSwipeRows = ["count", "color"].includes(criterion);
+  const screenClass = `classification-screen criterion-${criterion}${usesSwipeRows ? " swipe-classification" : ""}`;
 
   app.innerHTML = `
     <section class="screen ${screenClass}">
       ${renderGameHeader(instruction, items.length, state.placedIds.size)}
-      <div class="instruction-banner"><strong>กิจกรรม:</strong> ${criterion === "count" ? "เลื่อนดูบัตรด้านบนและกลุ่มด้านล่าง แล้วลากบัตรไปวางตามจำนวน" : `ลากบัตรไปวางในกลุ่ม โดยใช้ “${CRITERION_LABELS[criterion]}” เป็นเกณฑ์`}</div>
+      <div class="instruction-banner"><strong>กิจกรรม:</strong> ${usesSwipeRows ? `เลื่อนดูบัตรด้านบนและกลุ่มด้านล่าง แล้วลากบัตรไปวางตาม${CRITERION_LABELS[criterion]}` : `ลากบัตรไปวางในกลุ่ม โดยใช้ “${CRITERION_LABELS[criterion]}” เป็นเกณฑ์`}</div>
       <div class="game-layout">
         <section class="card-bank">
           <h2>บัตรที่รอจัดกลุ่ม</h2>
