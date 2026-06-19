@@ -798,7 +798,7 @@ function renderClassificationLevel() {
   const groups = round.groups;
   const items = state.level.itemIds.map((id) => ITEM_MAP.get(id));
   const instruction = `ลากบัตรไปวางตามเกณฑ์ “${CRITERION_LABELS[criterion]}”`;
-  const usesSwipeRows = ["count", "color"].includes(criterion);
+  const usesSwipeRows = ["count", "color", "shape"].includes(criterion);
   const screenClass = `classification-screen criterion-${criterion}${usesSwipeRows ? " swipe-classification" : ""}`;
 
   app.innerHTML = `
