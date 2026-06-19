@@ -1186,12 +1186,16 @@ function renderLevelSummary(stars, reasonExample) {
       ? state.level.rounds.map((round) => CRITERION_LABELS[round.criterion]).join(", ")
       : CRITERION_LABELS[state.level.criterion];
   app.innerHTML = `
-    <section class="screen summary-wrap">
+    <section class="screen summary-wrap level-summary-screen">
       <article class="summary-card">
-        <span class="eyebrow">ผ่านด่าน ${state.level.id} แล้ว</span>
-        <h1>${stars === 3 ? "ยอดเยี่ยมมาก นักสังเกตตัวจิ๋ว!" : stars === 2 ? "เก่งมาก หนูใช้เกณฑ์ได้ถูกต้อง" : "สำเร็จแล้ว ฝึกอีกนิดจะคล่องขึ้น"}</h1>
-        ${renderStars(stars)}
-        <p class="big-score">คะแนน ${state.score}</p>
+        <div class="summary-header">
+          <span class="eyebrow">ผ่านด่าน ${state.level.id} แล้ว</span>
+          <h1>${stars === 3 ? "ยอดเยี่ยมมาก นักสังเกตตัวจิ๋ว!" : stars === 2 ? "เก่งมาก หนูใช้เกณฑ์ได้ถูกต้อง" : "สำเร็จแล้ว ฝึกอีกนิดจะคล่องขึ้น"}</h1>
+          <div class="summary-score-row">
+            ${renderStars(stars)}
+            <p class="big-score">คะแนน ${state.score}</p>
+          </div>
+        </div>
         ${state.level.type === "boss" ? `
           <p class="boss-result-line"><strong>${escapeHtml(state.playerName)}</strong> ใช้เวลา ${formatTime(state.bossElapsedSeconds)}</p>
           <section class="leaderboard-panel">
@@ -1199,13 +1203,13 @@ function renderLevelSummary(stars, reasonExample) {
             ${renderLeaderboard()}
           </section>
         ` : ""}
-        <div class="learning-summary">
-          <strong>ด่านนี้ใช้เกณฑ์อะไร?</strong><br>
-          ${criterionText}<br><br>
-          <strong>สิ่งที่เรียนรู้</strong><br>
-          ${state.level.summary}
+        <div class="summary-content-grid">
+          <div class="learning-summary">
+            <strong>เกณฑ์ที่ใช้:</strong> ${criterionText}<br>
+            <strong>สิ่งที่เรียนรู้:</strong> ${state.level.summary}
+          </div>
+          <p class="reason-example"><strong>ตัวอย่างเหตุผล:</strong><br>${reasonExample}</p>
         </div>
-        <p class="reason-example"><strong>ตัวอย่างการอธิบายเหตุผล:</strong><br>${reasonExample}</p>
         <div class="action-row">
           ${isFinal
             ? `<button id="finalReviewButton" class="primary-button" type="button">ดูสรุปใหญ่ท้ายเกม</button>`
