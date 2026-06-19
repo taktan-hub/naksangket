@@ -1068,8 +1068,8 @@ body[data-screen="summary"] .summary-card {
 }
 
 .criterion-shape .drop-zone {
-  flex-basis: min(64vw, 420px);
-  width: min(64vw, 420px);
+  flex-basis: calc(95vw - clamp(36px, 6vw, 84px));
+  width: calc(95vw - clamp(36px, 6vw, 84px));
 }
 
 .zones-grid[data-group-count="7"] {
@@ -1817,8 +1817,8 @@ body[data-screen="summary"] .summary-card {
   }
 
   .criterion-shape .drop-zone {
-    flex-basis: min(68vw, 390px);
-    width: min(68vw, 390px);
+    flex-basis: calc(95vw - 42px);
+    width: calc(95vw - 42px);
   }
 }
 
@@ -2486,8 +2486,8 @@ body[data-screen="summary"] .summary-card {
   }
 
   .criterion-shape .drop-zone {
-    flex-basis: min(58vw, 300px);
-    width: min(58vw, 300px);
+    flex-basis: calc(95vw - 32px);
+    width: calc(95vw - 32px);
   }
 
   .swipe-classification .drop-zone h3 {
