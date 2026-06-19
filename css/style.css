@@ -41,12 +41,14 @@ html {
    overflow:hidden is set — this kills the stray vertical scroll. */
 body {
   position: fixed;
-  inset: 0;
-  /* inset:0 (top+bottom=0) sizes body to the REAL visible viewport.
-     Do NOT also set height — an explicit height wins over bottom:0 and
-     can exceed the visible area, pushing the toolbar off-screen. */
+  top: 0;
+  left: 0;
+  /* --app-height is measured in JS from window.visualViewport.height (the
+     REAL visible area after the address bar), updated on resize/rotate.
+     This is reliable where 100dvh/svh are not (Chrome/Safari iOS). */
   margin: 0;
   width: 100%;
+  height: var(--app-height, 100dvh);
   overflow: hidden;
   overscroll-behavior: none;
   display: flex;

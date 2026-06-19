@@ -309,6 +309,27 @@ function initInstallPrompt() {
   }
 }
 
+// วัดความสูงพื้นที่ที่ "มองเห็นจริง" ในเบราว์เซอร์ (หัก address bar/แถบเครื่องมือ
+// ออกแล้ว) ด้วย visualViewport เพราะ 100dvh/svh บน Chrome/Safari iOS ไม่แม่นยำ
+// แล้วเก็บเป็น CSS variable --app-height ให้ body ใช้ล็อกความสูงพอดีจอเสมอ
+function setAppHeight() {
+  const vh = (window.visualViewport && window.visualViewport.height) || window.innerHeight;
+  document.documentElement.style.setProperty("--app-height", vh + "px");
+}
+
+function initViewportHeight() {
+  setAppHeight();
+  window.addEventListener("resize", setAppHeight);
+  window.addEventListener("orientationchange", () => {
+    // หน่วงเล็กน้อยให้เบราว์เซอร์รายงานขนาดหลังหมุนจอเสร็จก่อน
+    setTimeout(setAppHeight, 250);
+  });
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener("resize", setAppHeight);
+    window.visualViewport.addEventListener("scroll", setAppHeight);
+  }
+}
+
 function lockLandscapeOrientation() {
   if (screen.orientation && screen.orientation.lock) {
     screen.orientation.lock("landscape-primary").catch(() => {
@@ -1219,6 +1240,7 @@ soundButton.addEventListener("click", () => {
 teacherButton.addEventListener("click", () => teacherDialog.showModal());
 
 updateSoundButton();
+initViewportHeight();
 lockLandscapeOrientation();
 initInstallPrompt();
 handleLaunchRoute();
