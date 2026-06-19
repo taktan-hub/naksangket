@@ -466,11 +466,12 @@ button:disabled {
 
 .level-carousel-track .level-card {
   flex: 0 0 clamp(200px, 27vw, 400px);
-  /* fill the carousel height (no empty gaps); the bottom toolbar is a
-     reserved flex child so it never gets pushed off-screen. */
-  height: 100%;
+  /* proportional cards: height follows content, capped to the carousel so
+     they never push the toolbar off-screen. Centered vertically in the
+     carousel so any spare space reads as balanced padding, not a scroll. */
+  height: auto;
   max-height: 100%;
-  align-self: stretch;
+  align-self: center;
   scroll-snap-align: start;
   min-height: 0;
   overflow: hidden;
