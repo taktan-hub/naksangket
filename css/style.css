@@ -203,7 +203,8 @@ button:disabled {
 
 body[data-screen="levels"],
 body[data-screen="observe"],
-body[data-screen="summary"] {
+body[data-screen="summary"],
+body[data-screen="criterion-count"] {
   overflow: hidden;
   overscroll-behavior: none;
 }
@@ -213,7 +214,9 @@ body[data-screen="levels"] .screen,
 body[data-screen="observe"] #app,
 body[data-screen="observe"] .screen,
 body[data-screen="summary"] #app,
-body[data-screen="summary"] .screen {
+body[data-screen="summary"] .screen,
+body[data-screen="criterion-count"] #app,
+body[data-screen="criterion-count"] .screen {
   min-height: 0;
   overflow: hidden !important;
 }
@@ -312,6 +315,13 @@ body[data-screen="summary"] .summary-card {
   overflow: hidden !important;
   overscroll-behavior: none;
   touch-action: none;
+}
+
+body[data-screen="criterion-count"] .criterion-count {
+  height: 100%;
+  max-height: 100%;
+  overflow: hidden !important;
+  overscroll-behavior: none;
 }
 
 @keyframes screen-in {
@@ -945,6 +955,12 @@ body[data-screen="summary"] .summary-card {
   animation: wrong-shake 360ms ease;
 }
 
+.item-card.selected {
+  border-color: var(--blue-dark);
+  box-shadow: 0 0 0 5px rgba(120, 201, 238, 0.28), 0 8px 18px rgba(48, 87, 112, 0.18);
+  transform: translateY(-2px);
+}
+
 @keyframes correct-pop {
   50% {
     transform: scale(1.08);
@@ -981,6 +997,19 @@ body[data-screen="summary"] .summary-card {
 .zones-grid[data-group-count="4"] {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   grid-template-rows: repeat(2, minmax(0, 1fr));
+}
+
+.criterion-count .drop-zone h3 {
+  font-size: clamp(1.25rem, 2.8vw, 2rem);
+}
+
+.criterion-count .drop-zone h3::after {
+  content: " แตะเพื่อวาง";
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: clamp(0.72rem, 1.3vw, 0.9rem);
+  font-weight: 700;
 }
 
 .zones-grid[data-group-count="7"] {
@@ -1689,6 +1718,95 @@ body[data-screen="summary"] .summary-card {
   .card-bank {
     min-height: 0;
   }
+
+  .criterion-count.classification-screen {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(6px, 1vh, 10px);
+    overflow: hidden !important;
+  }
+
+  .criterion-count .game-header,
+  .criterion-count .instruction-banner,
+  .criterion-count .game-toolbar {
+    flex: 0 0 auto;
+  }
+
+  .criterion-count .game-layout {
+    display: grid;
+    flex: 1 1 0;
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(128px, 0.62fr) minmax(210px, 1fr);
+    gap: clamp(8px, 1.4vh, 12px);
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .criterion-count .card-bank,
+  .criterion-count .drop-area {
+    min-height: 0;
+    padding: clamp(8px, 1.5vh, 14px);
+    overflow: hidden;
+  }
+
+  .criterion-count .card-bank h2,
+  .criterion-count .drop-area h2 {
+    margin-bottom: clamp(5px, 0.8vh, 8px);
+    font-size: clamp(0.95rem, 2vw, 1.15rem);
+  }
+
+  .criterion-count .cards-grid {
+    display: flex;
+    gap: clamp(8px, 2vw, 12px);
+    height: calc(100% - 34px);
+    min-height: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+
+  .criterion-count .cards-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .criterion-count #cardBank .item-card {
+    flex: 0 0 clamp(92px, 25vw, 150px);
+    width: clamp(92px, 25vw, 150px);
+    height: 100%;
+    padding: 5px;
+    scroll-snap-align: start;
+  }
+
+  .criterion-count #cardBank .item-card img {
+    flex: 1 1 auto;
+    height: 100%;
+    max-height: calc(100% - 28px);
+  }
+
+  .criterion-count .drop-area {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .criterion-count .zones-grid[data-group-count="4"] {
+    flex: 1 1 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    gap: clamp(8px, 2vw, 12px);
+    min-height: 0;
+  }
+
+  .criterion-count .drop-zone {
+    padding: clamp(7px, 1.5vh, 12px);
+    border-width: 3px;
+  }
+
+  .criterion-count .zone-items {
+    grid-template-columns: repeat(auto-fit, minmax(48px, 1fr));
+    gap: 4px;
+  }
 }
 
 @media (max-width: 680px) {
@@ -1942,6 +2060,32 @@ body[data-screen="summary"] .summary-card {
 
   .level-card .sponsor-note {
     display: none;
+  }
+
+  .criterion-count .instruction-banner {
+    padding: 7px 10px;
+    font-size: 0.9rem;
+  }
+
+  .criterion-count .score-box {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .criterion-count .score-chip {
+    padding: 3px 7px;
+    font-size: 0.78rem;
+  }
+
+  .criterion-count .game-toolbar {
+    gap: 6px;
+    margin-top: 4px;
+  }
+
+  .criterion-count .game-toolbar button {
+    min-height: 34px;
+    padding: 5px 9px;
+    font-size: 0.82rem;
   }
 }
 
@@ -2296,6 +2440,48 @@ body[data-screen="summary"] .summary-card {
 
   .level-select-screen {
     gap: 3px;
+  }
+
+  .criterion-count .game-header {
+    padding: 6px 10px;
+  }
+
+  .criterion-count .game-header h1 {
+    font-size: clamp(0.95rem, 2vw, 1.2rem);
+  }
+
+  .criterion-count .criterion-badge {
+    min-height: 28px;
+    padding: 3px 8px;
+    font-size: 0.78rem;
+  }
+
+  .criterion-count .game-layout {
+    grid-template-rows: minmax(104px, 0.54fr) minmax(176px, 1fr);
+  }
+
+  .criterion-count .card-bank,
+  .criterion-count .drop-area {
+    padding: 7px;
+    border-radius: 16px;
+  }
+
+  .criterion-count .card-bank h2,
+  .criterion-count .drop-area h2 {
+    margin-bottom: 3px;
+    font-size: 0.9rem;
+  }
+
+  .criterion-count #cardBank .item-card {
+    flex-basis: clamp(78px, 18vw, 118px);
+  }
+
+  .criterion-count .drop-zone h3 {
+    font-size: clamp(0.95rem, 2.3vw, 1.25rem);
+  }
+
+  .criterion-count .drop-zone h3::after {
+    font-size: 0.62rem;
   }
 }
 

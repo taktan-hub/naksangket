@@ -160,7 +160,7 @@ let levelTouchStart = null;
 function isScrollLockedScreen() {
   return (
     ["levels", "game", "summary"].includes(state.screen) &&
-    ["levels", "observe", "summary"].includes(document.body.dataset.screen)
+    ["levels", "observe", "summary", "criterion-count"].includes(document.body.dataset.screen)
   );
 }
 
@@ -798,14 +798,16 @@ function renderClassificationLevel() {
   const groups = round.groups;
   const items = state.level.itemIds.map((id) => ITEM_MAP.get(id));
   const instruction = `ลากบัตรไปวางตามเกณฑ์ “${CRITERION_LABELS[criterion]}”`;
+  const screenClass = `classification-screen criterion-${criterion}`;
+  setScreenClass(`criterion-${criterion}`);
 
   app.innerHTML = `
-    <section class="screen">
+    <section class="screen ${screenClass}">
       ${renderGameHeader(instruction, items.length, state.placedIds.size)}
       <div class="instruction-banner"><strong>กิจกรรม:</strong> ลากบัตรไปวางในกลุ่ม โดยใช้ “${CRITERION_LABELS[criterion]}” เป็นเกณฑ์</div>
       <div class="game-layout">
         <section class="card-bank">
-          <h2>บัตรที่รอจัดกลุ่ม</h2>
+          <h2>${criterion === "count" ? "เลือกบัตร แล้วนับจำนวนในภาพ" : "บัตรที่รอจัดกลุ่ม"}</h2>
           <div id="cardBank" class="cards-grid">
             ${items.filter((item) => !state.placedIds.has(item.id)).map((item) => renderDraggableCard(item)).join("")}
           </div>
@@ -826,6 +828,7 @@ function renderClassificationLevel() {
   `;
 
   setupDragAndDrop();
+  setupTapToClassify();
   app.querySelector("#hintButton").addEventListener("click", () => showToast(round.hint || state.level.hint, "hint"));
   attachCommonGameButtons();
   attachImageFallbacks(app);
@@ -864,6 +867,32 @@ function setupDragAndDrop() {
   app.querySelectorAll(".item-card[data-item-id]").forEach((card) => {
     card.addEventListener("pointerdown", beginPointerDrag);
     card.addEventListener("keydown", handleCardKeyboard);
+  });
+}
+
+function setupTapToClassify() {
+  let selectedCard = null;
+  app.querySelectorAll("#cardBank .item-card[data-item-id]").forEach((card) => {
+    card.addEventListener("click", () => {
+      if (card.classList.contains("dragging")) return;
+      selectedCard?.classList.remove("selected");
+      selectedCard = card;
+      card.classList.add("selected");
+      showToast(`เลือก ${ITEM_MAP.get(card.dataset.itemId).name} แล้ว แตะกลุ่มที่ต้องการ`, "hint");
+    });
+  });
+
+  app.querySelectorAll(".drop-zone").forEach((zone) => {
+    zone.addEventListener("click", () => {
+      if (!selectedCard) {
+        showToast("แตะเลือกบัตรภาพก่อน แล้วค่อยแตะกลุ่ม", "hint");
+        return;
+      }
+      const card = selectedCard;
+      selectedCard = null;
+      card.classList.remove("selected");
+      handleDrop(card.dataset.itemId, zone.dataset.group, card);
+    });
   });
 }
 
