@@ -788,6 +788,44 @@ Follow this order when picking up a task:
 
 ---
 
-**Last Updated**: 2026-06-18  
-**Status**: ✅ PWA Conversion Complete  
+**Last Updated**: 2026-06-20  
+**Status**: ✅ PWA Conversion Complete + Mobile/iPad Layout Overhaul Complete  
 **Maintenance**: Keep claude.md in sync when modifying ITEMS, LEVELS, or render pipeline
+
+---
+
+## 📒 บันทึกการทำงาน 2026-06-19 → 2026-06-20 (Mobile/iPad Layout Overhaul)
+
+ภารกิจ: ทำให้ทุกหน้า **พอดี viewport ไม่ scroll แนวตั้ง + responsive + friendly** บนมือถือ/iPad (ทดสอบจริงบน iPad Air แนวนอน, Chrome iOS) แล้ว deploy ผ่าน Git → Plesk auto-pull
+
+### 🔑 บทเรียนสำคัญที่สุด (อ่านก่อนแก้เรื่อง scroll/viewport)
+
+1. **iOS ห้ามหยุด scroll ด้วย CSS อย่างเดียว** — `overflow:hidden` / `position:fixed` / `dvh` / `svh` **ไม่พอ** เพราะ iOS Safari/Chrome ถือว่าการเลื่อนเป็น **touch gesture**. ต้องดักด้วย JavaScript:
+   - `document.body.dataset.screen = name` (`setScreenClass`, script.js) ทำ flag ให้ scope กฎต่อหน้า
+   - `initLevelSelectScrollLock()` (script.js) — ดัก `touchmove` แล้ว `preventDefault()` **เฉพาะตอนปัดแนวตั้ง** (`dy > dx`), ปัดแนวนอนปล่อยให้ carousel ทำงาน + ดัก `wheel` แนวตั้ง (ต้อง `{ passive:false }`)
+   - CSS `touch-action: pan-x` บน element ที่ต้องปัดแนวนอน
+2. **วัดความสูง viewport จริงด้วย JS ไม่ใช่ `dvh/svh`** — `setAppHeight()` อ่าน `window.visualViewport.height` (พื้นที่จริงหลังหัก address bar) → เก็บใน CSS var `--app-height`, อัปเดตตอน `resize/orientationchange/load/pageshow`. `body`/`html` ใช้ `height: var(--app-height)`
+3. **อย่าใช้ magic-number ความสูง header** (`height: calc(100% - 210px)`) — ไม่ responsive, พังกับ Boss ที่ header สูงกว่า. ใช้ **flex column** แทน: header/banner/toolbar = `flex:0 0 auto`, พื้นที่เนื้อหา = `flex:1`
+4. **ปัญหา cache เรื้อรัง** — แก้ CSS/JS แล้วเครื่องไม่เห็นของใหม่ เพราะ Service Worker เสิร์ฟไฟล์เก่า. ทุกครั้งที่แก้ CSS/JS ต้อง:
+   - bump `CACHE_NAME` + `RUNTIME_CACHE` ใน `sw.js`
+   - bump `?v=x.x.x` ต่อท้าย `style.css`/`script.js` ใน `index.html` (เวอร์ชันล่าสุด: **v1.1.11**)
+   - ทดสอบใน **Incognito/Private tab** เพื่อเลี่ยง SW เก่า
+
+### ✅ สิ่งที่แก้ไปแล้ว (ตามหน้า)
+
+| หน้า | สิ่งที่ทำ |
+|------|-----------|
+| **เลือกภารกิจ** (renderLevelSelect) | เปลี่ยนเป็น **horizontal swipe carousel** (`.level-carousel-*`), ล็อก vertical scroll ด้วย gesture lock + `touch-action:pan-x`, heading เหลือบรรทัดเดียว (`.level-select-heading`), ซ่อนสปอนเซอร์ซ้ำบน toolbar |
+| **ด่าน 1 สังเกต** | จัดให้พอดีจอ, เก็บ game state ถูกต้อง |
+| **ด่าน 2-4 จัดกลุ่ม** | redesign เป็น **2 แถว swipe** (`usesSwipeRows` = count/color/shape → class `swipe-classification`): แถวบน = บัตรรอจัด, แถวล่าง = กลุ่มปลายทาง |
+| **ด่าน 4 รูปร่าง (shape)** | shape มี 2 กลุ่ม → `.criterion-shape .zones-grid` เป็น **grid 2 คอลัมน์ เห็นทั้งกลม/ยาวพร้อมกัน** (ไม่ swipe ระหว่าง zone) |
+| **การ์ดในกล่องจัดกลุ่ม** | เพิ่ม `touch-action:pan-x` ให้ปัดดูการ์ดที่วางแล้วได้ (การ์ดที่วางแล้ว JS ถอด drag listener ที่ handleDrop:986 จึงปัดได้ปลอดภัย — ตัวการที่บล็อกคือ base `.item-card{touch-action:none}`) |
+| **ด่าน 5 Boss** | header สูงกว่า (timer+roundmap) → ย้าย layout เป็น **flex-column base** ที่ `.classification-screen` ใช้ทุกความกว้าง (รวม iPad ≥980px), `game-layout = flex:1` → กล่องไม่โดนตัดครึ่ง |
+| **หน้าสรุปผล / Home** | ล็อก viewport, ปุ่มพอดีไม่ต้อง scroll |
+
+### 🧩 จุดอ้างอิงเร็ว (สำหรับงานต่อ)
+
+- **Scroll lock:** `setScreenClass`, `initLevelSelectScrollLock` (js/script.js ~174-201) + CSS `body[data-screen="levels"]` (~204), `--app-height` (`setAppHeight`/`initViewportHeight`)
+- **Classification layout:** `renderClassificationLevel` (js/script.js ~795), flag `usesSwipeRows`, CSS `.classification-screen` (flex column base), `.swipe-classification .*`, `.criterion-shape .*`
+- **Deploy:** push → GitHub `taktan-hub/naksangket` → Plesk webhook auto-pull (~1-2 นาที) → `krutak.thatnarai.net/science/p2/classification`. Author commit: `Taktan <taktan@tnw.ac.th>`
+- หมายเหตุ: งานช่วงท้ายมีบาง commit ทำโดย Codex (ChatGPT) — เห็นใน git log วันที่ 2026-06-19 (commit `e5f9db5` เป็นต้นไป)
