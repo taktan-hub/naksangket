@@ -201,6 +201,30 @@ button:disabled {
   animation: screen-in 300ms ease both;
 }
 
+body[data-screen="levels"] {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+body[data-screen="levels"] #app,
+body[data-screen="levels"] .screen {
+  min-height: 0;
+  overflow: hidden !important;
+}
+
+body[data-screen="levels"] .level-select-screen {
+  height: 100%;
+  max-height: 100%;
+  padding: 0;
+  overflow: hidden !important;
+}
+
+body[data-screen="levels"] .level-carousel-track {
+  overflow-x: auto;
+  overflow-y: hidden !important;
+  touch-action: pan-x;
+}
+
 @keyframes screen-in {
   from {
     opacity: 0;

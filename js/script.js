@@ -170,6 +170,10 @@ function saveProgress() {
   localStorage.setItem("classification-game-progress", JSON.stringify(state.progress));
 }
 
+function setScreenClass(screenName) {
+  document.body.dataset.screen = screenName;
+}
+
 function openSponsoredGame(sponsorKey, route) {
   const sponsor = SPONSORS[sponsorKey];
   if (!sponsor) return;
@@ -257,6 +261,7 @@ function goHome() {
   stopBossTimer();
   state.screen = "home";
   state.level = null;
+  setScreenClass("home");
   renderHome();
 }
 
@@ -347,6 +352,7 @@ function lockLandscapeOrientation() {
 }
 
 function renderHome() {
+  setScreenClass("home");
   app.innerHTML = `
     <section class="screen hero">
       <div class="hero-copy">
@@ -380,6 +386,7 @@ function renderLevelSelect() {
   stopBossTimer();
   state.screen = "levels";
   state.level = null;
+  setScreenClass("levels");
   const cards = LEVELS.map((level) => {
     const unlocked = level.id <= state.progress.unlocked;
     const stars = state.progress.stars[level.id] || 0;
@@ -539,6 +546,7 @@ function startLevel(levelId) {
 function beginLevel(level, playerName = "") {
   state.screen = "game";
   state.level = level;
+  setScreenClass("game");
   state.roundIndex = 0;
   state.score = 0;
   state.attempts = 0;
@@ -1133,6 +1141,7 @@ function calculateStars() {
 }
 
 function renderLevelSummary(stars, reasonExample) {
+  setScreenClass("summary");
   const isFinal = state.level.id === LEVELS.length;
   const criterionText = state.level.type === "observe"
     ? "การสังเกต"
@@ -1183,6 +1192,7 @@ function renderLevelSummary(stars, reasonExample) {
 }
 
 function renderFinalReview() {
+  setScreenClass("review");
   const examples = ["banana", "carrot", "tomato", "watermelon"].map((id) => ITEM_MAP.get(id));
   const totalStars = Object.values(state.progress.stars).reduce((sum, stars) => sum + stars, 0);
   app.innerHTML = `
