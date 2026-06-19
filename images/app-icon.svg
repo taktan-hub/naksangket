@@ -1,0 +1,46 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#78c9ee;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#247da6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <rect width="512" height="512" fill="url(#bgGradient)"/>
+
+  <!-- นักสังเกตตัวจิ๋ว - Magnifying Glass -->
+  <g transform="translate(256, 256)">
+    <!-- Handle -->
+    <rect x="100" y="100" width="40" height="180" rx="20" fill="#ffffff" opacity="0.9"/>
+
+    <!-- Glass circle -->
+    <circle cx="-40" cy="-40" r="120" fill="none" stroke="#ffffff" stroke-width="24"/>
+
+    <!-- Shine effect -->
+    <circle cx="-100" cy="-100" r="40" fill="#ffffff" opacity="0.3"/>
+  </g>
+
+  <!-- ผัก 🥬 - Vegetable -->
+  <g transform="translate(100, 100)">
+    <!-- ใบสีเขียว -->
+    <ellipse cx="30" cy="30" rx="25" ry="35" fill="#9edc9a"/>
+    <ellipse cx="10" cy="20" rx="20" ry="30" fill="#75bc79" transform="rotate(-30 10 20)"/>
+    <ellipse cx="50" cy="20" rx="20" ry="30" fill="#75bc79" transform="rotate(30 50 20)"/>
+  </g>
+
+  <!-- ผลไม้ 🍎 - Fruit -->
+  <g transform="translate(380, 380)">
+    <!-- แอปเปิล -->
+    <circle cx="30" cy="30" r="35" fill="#ef7d88"/>
+    <!-- ดำนำ -->
+    <rect x="26" y="0" width="8" height="15" fill="#8b7355"/>
+    <!-- ใบ -->
+    <ellipse cx="45" cy="15" rx="12" ry="20" fill="#75bc79" transform="rotate(30 45 15)"/>
+  </g>
+
+  <!-- Text overlay -->
+  <text x="256" y="480" font-family="Itim, sans-serif" font-size="48" font-weight="bold" fill="#ffffff" text-anchor="middle">
+    สังเกต
+  </text>
+</svg>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#78c9ee">
+  <meta name="description" content="เกมการเรียนรู้วิทยาศาสตร์ ป.2 เรื่องการจำแนกประเภทสิ่งต่าง ๆ">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="นักสังเกตตัวจิ๋ว">
+  <link rel="icon" href="images/icon-192x192.png" type="image/png">
+  <link rel="apple-touch-icon" href="images/icon-192x192.png">
+  <link rel="manifest" href="manifest.json">
+  <title>นักสังเกตตัวจิ๋ว: ภารกิจจัดกลุ่มผักและผลไม้</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#app">ข้ามไปยังเนื้อหาเกม</a>
+
+  <header class="topbar">
+    <button id="homeButton" class="icon-button" type="button" aria-label="กลับหน้าแรก">หน้าแรก</button>
+    <div class="topbar-title">นักสังเกตตัวจิ๋ว</div>
+    <div class="topbar-actions">
+      <button id="soundButton" class="icon-button" type="button" aria-pressed="true">เสียง: เปิด</button>
+      <button id="teacherButton" class="icon-button teacher-button" type="button">โหมดครู</button>
+    </div>
+  </header>
+
+  <main id="app" tabindex="-1" aria-live="polite"></main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <dialog id="teacherDialog" class="teacher-dialog">
+    <form method="dialog">
+      <button class="dialog-close" aria-label="ปิดโหมดครู">ปิด</button>
+    </form>
+    <h2>โหมดครู</h2>
+
+    <section>
+      <h3>จุดประสงค์การเรียนรู้</h3>
+      <ul>
+        <li>นักเรียนสามารถสังเกตลักษณะของสิ่งต่าง ๆ ได้</li>
+        <li>นักเรียนสามารถกำหนดเกณฑ์ในการจำแนกได้</li>
+        <li>นักเรียนสามารถจำแนกสิ่งต่าง ๆ ตามเกณฑ์ที่กำหนดได้</li>
+        <li>นักเรียนสามารถอธิบายเหตุผลในการจัดกลุ่มได้</li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>ทักษะที่ฝึก</h3>
+      <ul class="teacher-grid">
+        <li>การสังเกต</li>
+        <li>การจำแนกประเภท</li>
+        <li>การลงความเห็นจากข้อมูล</li>
+        <li>การตีความหมายข้อมูลและลงข้อสรุป</li>
+        <li>การสื่อสาร</li>
+        <li>ความร่วมมือ</li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>คำถามชวนคิด</h3>
+      <ol>
+        <li>นักเรียนสังเกตเห็นอะไรจากภาพนี้</li>
+        <li>สิ่งเหล่านี้เหมือนกันอย่างไร</li>
+        <li>สิ่งเหล่านี้ต่างกันอย่างไร</li>
+        <li>นักเรียนใช้เกณฑ์อะไรในการแบ่งกลุ่ม</li>
+        <li>ถ้าเปลี่ยนเกณฑ์ ผลการแบ่งกลุ่มจะเปลี่ยนหรือไม่</li>
+        <li>ทำไมสิ่งนี้จึงอยู่ในกลุ่มนี้</li>
+        <li>มีวิธีแบ่งกลุ่มแบบอื่นได้อีกหรือไม่</li>
+      </ol>
+    </section>
+
+    <section>
+      <h3>แนวทางใช้ในห้องเรียน</h3>
+      <p><strong>ก่อนเล่น:</strong> ชวนเด็กบอกสิ่งที่มองเห็นจากบัตรภาพ โดยยังไม่รีบบอกคำตอบ</p>
+      <p><strong>ระหว่างเล่น:</strong> ถามว่า “รอบนี้ใช้เกณฑ์อะไร” และให้เด็กพูดเหตุผลก่อนวางบัตร</p>
+      <p><strong>หลังเล่น:</strong> เปรียบเทียบภาพชุดเดิมเมื่อเปลี่ยนเกณฑ์ และให้เด็กเสนอวิธีแบ่งกลุ่มแบบอื่น</p>
+      <p><strong>การเล่นร่วมกัน:</strong> แบ่งนักเรียนเป็นคู่ คนหนึ่งลากบัตร อีกคนอธิบายเหตุผล แล้วสลับหน้าที่</p>
+    </section>
+  </dialog>
+
+  <noscript>
+    <p class="noscript-message">เกมนี้ต้องเปิดใช้งาน JavaScript ในเว็บเบราว์เซอร์</p>
+  </noscript>
+
+  <script src="js/script.js"></script>
+
+  <!-- PWA Service Worker Registration -->
+  <script>
+    // ลงทะเบียน Service Worker สำหรับ PWA
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then((registration) => {
+            console.log('[PWA] Service Worker registered:', registration);
+
+            // ตรวจสอบ update ทุก 60 วินาที
+            setInterval(() => {
+              registration.update();
+            }, 60000);
+
+            // ฟังเมื่อมี new service worker waiting
+            registration.addEventListener('updatefound', () => {
+              const newWorker = registration.installing;
+
+              newWorker.addEventListener('statechange', () => {
+                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                  // มี new service worker พร้อม
+                  console.log('[PWA] New version available');
+
+                  // แสดง toast หรือ prompt ให้ user reload
+                  const message = document.createElement('div');
+                  message.className = 'pwa-update-message';
+                  message.innerHTML = `
+                    <p>มีเวอร์ชั่นใหม่ของเกมให้ใช้งาน</p>
+                    <button id="pwaUpdateButton" type="button">อัพเดตเลย</button>
+                  `;
+                  document.body.appendChild(message);
+
+                  document.getElementById('pwaUpdateButton').addEventListener('click', () => {
+                    newWorker.postMessage({ action: 'skipWaiting' });
+                    window.location.reload();
+                  });
+                }
+              });
+            });
+          })
+          .catch((error) => {
+            console.error('[PWA] Service Worker registration failed:', error);
+          });
+
+        // ฟังเมื่อ controller เปลี่ยน (หลังจาก update)
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+          console.log('[PWA] Service Worker controller changed');
+        });
+      });
+
+      // ตรวจสอบ online/offline status
+      window.addEventListener('offline', () => {
+        console.log('[PWA] App is now offline');
+        document.body.classList.add('offline-mode');
+      });
+
+      window.addEventListener('online', () => {
+        console.log('[PWA] App is back online');
+        document.body.classList.remove('offline-mode');
+      });
+    }
+  </script>
+
+  <!-- PWA Update Notification Styles -->
+  <style>
+    .pwa-update-message {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      background: #fff6a9;
+      border: 2px solid #e9b858;
+      border-radius: 16px;
+      padding: 16px 20px;
+      box-shadow: 0 10px 30px rgba(48, 87, 112, 0.14);
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      animation: slideUp 300ms ease both;
+    }
+
+    .pwa-update-message p {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 600;
+      color: #27384a;
+    }
+
+    .pwa-update-message button {
+      min-width: 100px;
+      padding: 8px 16px;
+      background: #e9b858;
+      border: 0;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 160ms ease, filter 160ms ease;
+    }
+
+    .pwa-update-message button:hover {
+      filter: brightness(1.05);
+      transform: translateY(-2px);
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(120px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    body.offline-mode::before {
+      content: "🔴 ออนไลน์ไม่ได้ - กำลังใช้ข้อมูลที่บันทึกไว้";
+      position: fixed;
+      top: 72px;
+      left: 0;
+      right: 0;
+      background: #ffe5e8;
+      border-bottom: 2px solid #d85d6d;
+      padding: 8px;
+      text-align: center;
+      font-weight: 600;
+      color: #7b2833;
+      z-index: 999;
+    }
+
+    @media (max-width: 600px) {
+      .pwa-update-message {
+        flex-direction: column;
+        align-items: stretch;
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+      }
+
+      .pwa-update-message button {
+        width: 100%;
+      }
+    }
+  </style>
+</body>
+</html>

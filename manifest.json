@@ -1,0 +1,67 @@
+{
+  "name": "นักสังเกตตัวจิ๋ว: ภารกิจจัดกลุ่มผักและผลไม้",
+  "short_name": "นักสังเกตตัวจิ๋ว",
+  "description": "เกมการเรียนรู้วิทยาศาสตร์ ป.2 ฝึกการสังเกต การจำแนกประเภท และการอธิบายเหตุผล",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "landscape-primary",
+  "background_color": "#ffffff",
+  "theme_color": "#78c9ee",
+  "icons": [
+    {
+      "src": "./images/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./images/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "games"],
+  "screenshots": [
+    {
+      "src": "./images/กล้วยหอม.png",
+      "sizes": "540x720",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "./images/แตงกวา.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "เล่นด่าน 1",
+      "short_name": "ด่าน 1",
+      "description": "นักสังเกตตัวจิ๋ว - สังเกตลักษณะของสิ่งต่าง ๆ",
+      "url": "./index.html#level=1",
+      "icons": [
+        {
+          "src": "./images/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "เล่น Boss Mission",
+      "short_name": "Boss Mission",
+      "description": "พิชิตภารกิจจำนวน สี รูปร่าง และประเภทให้ครบ",
+      "url": "./index.html#level=5",
+      "icons": [
+        {
+          "src": "./images/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "prefer_related_applications": false
+}
