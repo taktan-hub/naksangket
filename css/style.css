@@ -1263,9 +1263,8 @@ body[data-screen="summary"] .summary-card {
 }
 
 .criterion-count .zones-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  grid-auto-rows: minmax(100%, auto);
+  display: flex;
+  flex-direction: column;
   gap: clamp(10px, 1.2vw, 16px);
   overflow-x: hidden;
   overflow-y: auto;
@@ -1278,8 +1277,8 @@ body[data-screen="summary"] .summary-card {
 
 .criterion-count .drop-zone {
   width: auto;
+  flex: 0 0 100%;
   min-height: 100%;
-  flex: initial;
   scroll-snap-align: start;
 }
 
@@ -2963,9 +2962,8 @@ body[data-screen="summary"] .summary-card {
 }
 
 .criterion-count .zones-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  grid-auto-rows: minmax(100%, auto);
+  display: flex;
+  flex-direction: column;
   overflow-x: hidden;
   overflow-y: auto;
   scroll-snap-type: y mandatory;
@@ -2980,8 +2978,8 @@ body[data-screen="summary"] .summary-card {
 
 .criterion-count .drop-zone {
   width: auto;
+  flex: 0 0 100%;
   min-height: 100%;
-  flex: initial;
   scroll-snap-align: start;
 }
 
@@ -3017,8 +3015,8 @@ body[data-screen="summary"] .summary-card {
   }
 
   .criterion-count .zones-grid {
-    grid-template-columns: 1fr;
-    grid-auto-rows: minmax(100%, auto);
+    display: flex;
+    flex-direction: column;
     gap: 8px;
   }
 
@@ -3062,8 +3060,8 @@ body[data-screen="summary"] .summary-card {
   }
 
   .criterion-count .zones-grid {
-    grid-template-columns: minmax(0, 1fr);
-    grid-auto-rows: minmax(100%, auto);
+    display: flex;
+    flex-direction: column;
     gap: 8px;
   }
 
