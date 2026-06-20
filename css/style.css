@@ -3234,8 +3234,9 @@ body[data-screen="classification-panel"] .zone-items {
   grid-template-columns: repeat(auto-fit, minmax(82px, 1fr));
   grid-auto-rows: minmax(120px, auto);
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: hidden;
   touch-action: pan-y;
+  pointer-events: none;
 }
 
 body[data-screen="classification-panel"] .drop-zone .item-card {
@@ -3244,6 +3245,7 @@ body[data-screen="classification-panel"] .drop-zone .item-card {
   height: auto;
   flex: initial;
   touch-action: pan-y;
+  pointer-events: auto;
 }
 
 body[data-screen="classification-panel"] .drop-zone .item-card img {
