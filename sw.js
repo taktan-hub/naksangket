@@ -1,8 +1,8 @@
 // Service Worker สำหรับ PWA Classification Game
 // รุ่น 1.0.0
 
-const CACHE_NAME = "classification-game-v1.1.11";
-const RUNTIME_CACHE = "classification-runtime-v22";
+const CACHE_NAME = "classification-game-v1.1.12";
+const RUNTIME_CACHE = "classification-runtime-v23";
 
 // รายการไฟล์ที่ต้อง cache ทั้งหมด
 const ASSETS_TO_CACHE = [
