@@ -160,12 +160,20 @@ let levelTouchStart = null;
 function isScrollLockedScreen() {
   return (
     ["levels", "game", "summary"].includes(state.screen) &&
-    ["levels", "observe", "summary"].includes(document.body.dataset.screen)
+    ["levels", "observe", "summary", "criterion-count"].includes(document.body.dataset.screen)
   );
 }
 
 function isInsideDialog(target) {
   return target instanceof Element && target.closest("dialog");
+}
+
+function isInsideCountScrollArea(target) {
+  return (
+    document.body.dataset.screen === "criterion-count" &&
+    target instanceof Element &&
+    target.closest(".criterion-count .cards-grid, .criterion-count .zones-grid, .criterion-count .zone-items")
+  );
 }
 
 function loadProgress() {
@@ -196,6 +204,7 @@ function initLevelSelectScrollLock() {
   document.addEventListener("touchmove", (event) => {
     if (!isScrollLockedScreen() || !levelTouchStart || event.touches.length !== 1) return;
     if (isInsideDialog(event.target)) return;
+    if (isInsideCountScrollArea(event.target)) return;
     const touch = event.touches[0];
     const dx = Math.abs(touch.clientX - levelTouchStart.x);
     const dy = Math.abs(touch.clientY - levelTouchStart.y);
@@ -209,6 +218,7 @@ function initLevelSelectScrollLock() {
   window.addEventListener("wheel", (event) => {
     if (!isScrollLockedScreen()) return;
     if (isInsideDialog(event.target)) return;
+    if (isInsideCountScrollArea(event.target)) return;
     if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) event.preventDefault();
   }, { passive: false });
 }
@@ -803,6 +813,7 @@ function renderClassificationLevel() {
   const instruction = `ลากบัตรไปวางตามเกณฑ์ “${CRITERION_LABELS[criterion]}”`;
   const usesSwipeRows = ["count", "color", "shape"].includes(criterion);
   const screenClass = `classification-screen criterion-${criterion}${usesSwipeRows ? " swipe-classification" : ""}`;
+  setScreenClass(criterion === "count" ? "criterion-count" : "game");
 
   app.innerHTML = `
     <section class="screen ${screenClass}">

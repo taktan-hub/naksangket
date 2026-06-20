@@ -203,6 +203,7 @@ button:disabled {
 
 body[data-screen="levels"],
 body[data-screen="observe"],
+body[data-screen="criterion-count"],
 body[data-screen="summary"] {
   overflow: hidden;
   overscroll-behavior: none;
@@ -212,10 +213,26 @@ body[data-screen="levels"] #app,
 body[data-screen="levels"] .screen,
 body[data-screen="observe"] #app,
 body[data-screen="observe"] .screen,
+body[data-screen="criterion-count"] #app,
+body[data-screen="criterion-count"] .screen,
 body[data-screen="summary"] #app,
 body[data-screen="summary"] .screen {
   min-height: 0;
   overflow: hidden !important;
+}
+
+body[data-screen="criterion-count"] .classification-screen {
+  height: 100%;
+  max-height: 100%;
+  overflow: hidden !important;
+  overscroll-behavior: none;
+}
+
+body[data-screen="criterion-count"] .cards-grid,
+body[data-screen="criterion-count"] .zones-grid,
+body[data-screen="criterion-count"] .zone-items {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 
 body[data-screen="levels"] .level-select-screen {
