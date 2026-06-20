@@ -216,15 +216,18 @@ function initLevelSelectScrollLock() {
 function openSponsoredGame(sponsorKey, route) {
   const sponsor = SPONSORS[sponsorKey];
   if (!sponsor) return;
-  const gameUrl = new URL(window.location.href);
+  const gameUrl = new URL(`${window.location.origin}${window.location.pathname}${window.location.search}`);
   gameUrl.hash = route;
-  const gameTab = window.open(gameUrl.href, "_blank");
+  const gameTab = window.open("about:blank", "_blank");
   if (!gameTab) {
     showToast("เบราว์เซอร์บล็อกแท็บใหม่ กรุณาอนุญาต pop-up แล้วลองอีกครั้ง", "hint");
     return;
   }
+  gameTab.location.replace(gameUrl.href);
   gameTab.opener = null;
-  window.location.assign(sponsor.url);
+  window.setTimeout(() => {
+    window.location.assign(sponsor.url);
+  }, 80);
 }
 
 function loadLeaderboard() {
