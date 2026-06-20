@@ -1214,6 +1214,96 @@ body[data-screen="summary"] .summary-card {
   font-size: clamp(0.78rem, 1.8vh, 1rem);
 }
 
+/* ด่าน 2: จัดกลุ่มตามจำนวน
+   ใช้ 2 column แนวตั้ง เพื่อให้เด็กเห็นบัตรใหญ่ขึ้น และให้ scroll เฉพาะในกล่อง */
+.criterion-count.classification-screen {
+  overflow: hidden;
+}
+
+.criterion-count .game-layout {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.92fr) minmax(260px, 1.08fr);
+  grid-template-rows: minmax(0, 1fr);
+  gap: clamp(10px, 1.4vw, 18px);
+  overflow: hidden;
+}
+
+.criterion-count .card-bank,
+.criterion-count .drop-area {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.criterion-count .cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(clamp(116px, 11vw, 170px), 1fr));
+  grid-auto-rows: minmax(clamp(190px, 28vh, 270px), auto);
+  gap: clamp(10px, 1.2vw, 16px);
+  align-content: start;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scroll-snap-type: none;
+  scrollbar-width: thin;
+  scrollbar-color: var(--blue) transparent;
+  padding-right: 4px;
+}
+
+.criterion-count #cardBank .item-card {
+  width: 100%;
+  height: 100%;
+  min-height: clamp(190px, 28vh, 270px);
+  flex: initial;
+  scroll-snap-align: none;
+}
+
+.criterion-count #cardBank .item-card img {
+  height: auto;
+  max-height: clamp(145px, 21vh, 220px);
+}
+
+.criterion-count .zones-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(150px, 1fr));
+  grid-auto-rows: minmax(210px, 1fr);
+  gap: clamp(10px, 1.2vw, 16px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scroll-snap-type: none;
+  scrollbar-width: thin;
+  scrollbar-color: var(--pink-dark) transparent;
+  padding-right: 4px;
+}
+
+.criterion-count .drop-zone {
+  width: auto;
+  min-height: 210px;
+  flex: initial;
+  scroll-snap-align: none;
+}
+
+.criterion-count .zone-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(82px, 1fr));
+  grid-auto-rows: minmax(120px, auto);
+  overflow-x: hidden;
+  overflow-y: auto;
+  touch-action: pan-y;
+}
+
+.criterion-count .drop-zone .item-card {
+  width: 100%;
+  height: auto;
+  min-height: 120px;
+  flex: initial;
+  touch-action: pan-y;
+}
+
+.criterion-count .drop-zone .item-card img {
+  max-height: 96px;
+}
+
 .drop-zone[data-capacity="1"] .zone-items {
   grid-template-columns: minmax(72px, 150px);
 }
@@ -2854,6 +2944,129 @@ body[data-screen="summary"] .summary-card {
   .section-heading p {
     font-size: 0.82rem;
     margin: 0.2rem 0;
+  }
+}
+
+/* Final override for ด่าน 2 after responsive swipe rules */
+.criterion-count .game-layout {
+  grid-template-columns: minmax(220px, 0.92fr) minmax(260px, 1.08fr);
+  grid-template-rows: minmax(0, 1fr);
+}
+
+.criterion-count .cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(clamp(116px, 11vw, 170px), 1fr));
+  grid-auto-rows: minmax(clamp(190px, 28vh, 270px), auto);
+  overflow-x: hidden;
+  overflow-y: auto;
+  touch-action: pan-y;
+}
+
+.criterion-count .zones-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(150px, 1fr));
+  grid-auto-rows: minmax(210px, 1fr);
+  overflow-x: hidden;
+  overflow-y: auto;
+  touch-action: pan-y;
+}
+
+.criterion-count #cardBank .item-card {
+  width: 100%;
+  min-height: clamp(190px, 28vh, 270px);
+  flex: initial;
+}
+
+.criterion-count .drop-zone {
+  width: auto;
+  min-height: 210px;
+  flex: initial;
+}
+
+@media (max-width: 760px) {
+  .criterion-count .instruction-banner {
+    font-size: clamp(0.78rem, 2.5vw, 0.95rem);
+    padding: 6px 10px;
+  }
+
+  .criterion-count .game-layout {
+    grid-template-columns: minmax(130px, 42vw) minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .criterion-count .card-bank,
+  .criterion-count .drop-area {
+    padding: 7px;
+  }
+
+  .criterion-count .cards-grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: minmax(178px, auto);
+    gap: 8px;
+  }
+
+  .criterion-count #cardBank .item-card {
+    min-height: 178px;
+    padding: 5px;
+  }
+
+  .criterion-count #cardBank .item-card img {
+    max-height: 132px;
+  }
+
+  .criterion-count .zones-grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: minmax(160px, auto);
+    gap: 8px;
+  }
+
+  .criterion-count .drop-zone {
+    min-height: 160px;
+  }
+
+  .criterion-count .zone-items {
+    grid-template-columns: repeat(2, minmax(58px, 1fr));
+    grid-auto-rows: minmax(96px, auto);
+  }
+
+  .criterion-count .drop-zone .item-card {
+    min-height: 96px;
+  }
+
+  .criterion-count .drop-zone .item-card img {
+    max-height: 68px;
+  }
+}
+
+@media (max-height: 600px) and (orientation: landscape) {
+  .criterion-count .game-layout {
+    grid-template-columns: minmax(190px, 0.9fr) minmax(260px, 1.1fr);
+    grid-template-rows: minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .criterion-count .cards-grid {
+    grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
+    grid-auto-rows: minmax(150px, auto);
+    gap: 8px;
+  }
+
+  .criterion-count #cardBank .item-card {
+    min-height: 150px;
+  }
+
+  .criterion-count #cardBank .item-card img {
+    max-height: 108px;
+  }
+
+  .criterion-count .zones-grid {
+    grid-template-columns: repeat(2, minmax(130px, 1fr));
+    grid-auto-rows: minmax(140px, auto);
+    gap: 8px;
+  }
+
+  .criterion-count .drop-zone {
+    min-height: 140px;
   }
 }
 
