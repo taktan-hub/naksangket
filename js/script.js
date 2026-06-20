@@ -160,7 +160,7 @@ let levelTouchStart = null;
 function isScrollLockedScreen() {
   return (
     ["levels", "game", "summary"].includes(state.screen) &&
-    ["levels", "observe", "summary", "criterion-count"].includes(document.body.dataset.screen)
+    ["levels", "observe", "summary", "criterion-count", "classification-panel"].includes(document.body.dataset.screen)
   );
 }
 
@@ -168,11 +168,11 @@ function isInsideDialog(target) {
   return target instanceof Element && target.closest("dialog");
 }
 
-function isInsideCountScrollArea(target) {
+function isInsideClassificationScrollArea(target) {
   return (
-    document.body.dataset.screen === "criterion-count" &&
+    ["criterion-count", "classification-panel"].includes(document.body.dataset.screen) &&
     target instanceof Element &&
-    target.closest(".criterion-count .cards-grid, .criterion-count .zones-grid, .criterion-count .zone-items")
+    target.closest(".classification-screen .cards-grid, .classification-screen .zones-grid, .classification-screen .zone-items")
   );
 }
 
@@ -204,7 +204,7 @@ function initLevelSelectScrollLock() {
   document.addEventListener("touchmove", (event) => {
     if (!isScrollLockedScreen() || !levelTouchStart || event.touches.length !== 1) return;
     if (isInsideDialog(event.target)) return;
-    if (isInsideCountScrollArea(event.target)) return;
+    if (isInsideClassificationScrollArea(event.target)) return;
     const touch = event.touches[0];
     const dx = Math.abs(touch.clientX - levelTouchStart.x);
     const dy = Math.abs(touch.clientY - levelTouchStart.y);
@@ -218,7 +218,7 @@ function initLevelSelectScrollLock() {
   window.addEventListener("wheel", (event) => {
     if (!isScrollLockedScreen()) return;
     if (isInsideDialog(event.target)) return;
-    if (isInsideCountScrollArea(event.target)) return;
+    if (isInsideClassificationScrollArea(event.target)) return;
     if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) event.preventDefault();
   }, { passive: false });
 }
@@ -813,12 +813,12 @@ function renderClassificationLevel() {
   const instruction = `ลากบัตรไปวางตามเกณฑ์ “${CRITERION_LABELS[criterion]}”`;
   const usesSwipeRows = ["count", "color", "shape"].includes(criterion);
   const screenClass = `classification-screen criterion-${criterion}${usesSwipeRows ? " swipe-classification" : ""}`;
-  setScreenClass(criterion === "count" ? "criterion-count" : "game");
+  setScreenClass("classification-panel");
 
   app.innerHTML = `
     <section class="screen ${screenClass}">
       ${renderGameHeader(instruction, items.length, state.placedIds.size)}
-      <div class="instruction-banner"><strong>กิจกรรม:</strong> ${usesSwipeRows ? `เลื่อนดูบัตรด้านบนและกลุ่มด้านล่าง แล้วลากบัตรไปวางตาม${CRITERION_LABELS[criterion]}` : `ลากบัตรไปวางในกลุ่ม โดยใช้ “${CRITERION_LABELS[criterion]}” เป็นเกณฑ์`}</div>
+      <div class="instruction-banner"><strong>กิจกรรม:</strong> เลื่อนดูบัตรฝั่งซ้ายและกลุ่มฝั่งขวา แล้วลากบัตรไปวางตาม${CRITERION_LABELS[criterion]}</div>
       <div class="game-layout">
         <section class="card-bank">
           <h2>บัตรที่รอจัดกลุ่ม</h2>
