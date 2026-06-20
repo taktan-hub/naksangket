@@ -3200,6 +3200,7 @@ body[data-screen="classification-panel"] #cardBank .item-card {
   height: 100%;
   flex: initial;
   scroll-snap-align: none;
+  touch-action: pan-y;
 }
 
 body[data-screen="classification-panel"] #cardBank .item-card img {
@@ -3225,6 +3226,7 @@ body[data-screen="classification-panel"] .drop-zone {
   min-height: 100%;
   flex: 0 0 100%;
   scroll-snap-align: start;
+  touch-action: pan-y;
 }
 
 body[data-screen="classification-panel"] .zone-items {
