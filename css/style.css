@@ -2456,6 +2456,75 @@ body[data-screen="summary"] .summary-card {
   }
 }
 
+@media (max-width: 680px) and (orientation: portrait) {
+  body[data-screen="home"] #app {
+    height: calc(var(--app-height, 100dvh) - 112px);
+    padding: 8px 10px max(10px, env(safe-area-inset-bottom));
+    overflow: hidden;
+  }
+
+  body[data-screen="home"] .hero {
+    display: flex;
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  body[data-screen="home"] .hero-copy {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    justify-content: center;
+    max-height: 100%;
+    padding: clamp(14px, 4vw, 20px);
+    overflow: hidden;
+  }
+
+  body[data-screen="home"] .eyebrow {
+    min-height: 30px;
+    padding: 5px 10px;
+    font-size: clamp(0.9rem, 3.5vw, 1rem);
+  }
+
+  body[data-screen="home"] .hero h1 {
+    margin: 8px 0;
+    font-size: clamp(1.9rem, 8.5vw, 2.65rem);
+    line-height: 1.08;
+  }
+
+  body[data-screen="home"] .hero p {
+    margin: 6px 0;
+    font-size: clamp(0.98rem, 4vw, 1.15rem);
+    line-height: 1.45;
+  }
+
+  body[data-screen="home"] .hero-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  body[data-screen="home"] .hero-actions button {
+    width: 100%;
+    min-height: 42px;
+    padding: 8px 12px;
+  }
+
+  body[data-screen="home"] .sponsored-action {
+    max-width: none;
+  }
+
+  body[data-screen="home"] .sponsored-action small {
+    font-size: 0.68rem;
+    line-height: 1.15;
+  }
+
+  body[data-screen="home"] .hero-image-grid {
+    display: none;
+  }
+}
+
 @media (max-height: 620px) {
   .topbar {
     height: 58px;
