@@ -1264,13 +1264,13 @@ body[data-screen="summary"] .summary-card {
 
 .criterion-count .zones-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(150px, 1fr));
-  grid-auto-rows: minmax(210px, 1fr);
+  grid-template-columns: minmax(0, 1fr);
+  grid-auto-rows: minmax(100%, auto);
   gap: clamp(10px, 1.2vw, 16px);
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
-  scroll-snap-type: none;
+  scroll-snap-type: y mandatory;
   scrollbar-width: thin;
   scrollbar-color: var(--pink-dark) transparent;
   padding-right: 4px;
@@ -1278,9 +1278,9 @@ body[data-screen="summary"] .summary-card {
 
 .criterion-count .drop-zone {
   width: auto;
-  min-height: 210px;
+  min-height: 100%;
   flex: initial;
-  scroll-snap-align: none;
+  scroll-snap-align: start;
 }
 
 .criterion-count .zone-items {
@@ -2964,10 +2964,11 @@ body[data-screen="summary"] .summary-card {
 
 .criterion-count .zones-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(150px, 1fr));
-  grid-auto-rows: minmax(210px, 1fr);
+  grid-template-columns: minmax(0, 1fr);
+  grid-auto-rows: minmax(100%, auto);
   overflow-x: hidden;
   overflow-y: auto;
+  scroll-snap-type: y mandatory;
   touch-action: pan-y;
 }
 
@@ -2979,8 +2980,9 @@ body[data-screen="summary"] .summary-card {
 
 .criterion-count .drop-zone {
   width: auto;
-  min-height: 210px;
+  min-height: 100%;
   flex: initial;
+  scroll-snap-align: start;
 }
 
 @media (max-width: 760px) {
@@ -3016,12 +3018,12 @@ body[data-screen="summary"] .summary-card {
 
   .criterion-count .zones-grid {
     grid-template-columns: 1fr;
-    grid-auto-rows: minmax(160px, auto);
+    grid-auto-rows: minmax(100%, auto);
     gap: 8px;
   }
 
   .criterion-count .drop-zone {
-    min-height: 160px;
+    min-height: 100%;
   }
 
   .criterion-count .zone-items {
@@ -3060,13 +3062,13 @@ body[data-screen="summary"] .summary-card {
   }
 
   .criterion-count .zones-grid {
-    grid-template-columns: repeat(2, minmax(130px, 1fr));
-    grid-auto-rows: minmax(140px, auto);
+    grid-template-columns: minmax(0, 1fr);
+    grid-auto-rows: minmax(100%, auto);
     gap: 8px;
   }
 
   .criterion-count .drop-zone {
-    min-height: 140px;
+    min-height: 100%;
   }
 }
 
